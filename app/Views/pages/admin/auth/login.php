@@ -40,13 +40,13 @@
         <div class="input-group mb-0">
           <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</a>
         </div>
-        <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
+        <!-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
           OR
         </div>
         <div class="input-group mb-0">
           <a class="btn btn-outline-primary btn-lg btn-block" href="register.html">Register To Create
             Account</a>
-        </div>
+        </div> -->
       </div>
     </div>
   </form>

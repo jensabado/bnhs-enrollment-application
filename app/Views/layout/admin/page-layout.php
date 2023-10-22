@@ -16,12 +16,12 @@
   <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/vendors/styles/core.css') ?>" />
   <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/vendors/styles/icon-font.min.css') ?>" />
   <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/vendors/styles/style.css') ?>" />
-  <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/src/plugins/datatables/css/dataTables.bootstrap4.min.css') ?>" />
+  <link rel="stylesheet" type="text/css" href="<?= base_url('global/jquery.dataTables.min.css') ?>" />
   <title><?= isset($pageTitle) ? $pageTitle : 'Admin' ?></title>
 </head>
 
 <body>
-  <div class="pre-loader">
+  <!-- <div class="pre-loader">
     <div class="pre-loader-box">
       <div class="loader-logo">
         <img src="<?= base_url('home-assets/img/bnhs-logo.png') ?>" style="width: 90px;" alt="" />
@@ -30,9 +30,8 @@
         <div class="bar" id="bar1"></div>
       </div>
       <div class="percent" id="percent1">0%</div>
-      <!-- <div class="loading-text">Loading...</div> -->
     </div>
-  </div>
+  </div> -->
 
   <div class="header">
     <div class="header-left">
@@ -319,11 +318,8 @@
   <script src="<?= base_url('admin-assets/vendors/scripts/script.min.js') ?>"></script>
   <script src="<?= base_url('admin-assets/vendors/scripts/process.js') ?>"></script>
   <script src="<?= base_url('admin-assets/vendors/scripts/layout-settings.js') ?>"></script>
-  <script src="<?= base_url('admin-assets/src/plugins/datatables/js/jquery.dataTables.min.js') ?>"></script>
-  <script src="<?= base_url('admin-assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js') ?>"></script>
-  <script src="<?= base_url('admin-assets/src/plugins/datatables/js/dataTables.responsive.min.js') ?>"></script>
-  <script src="<?= base_url('admin-assets/src/plugins/datatables/js/responsive.bootstrap4.min.js') ?>"></script>
-  <script src="<?= base_url('admin-assets/vendors/scripts/datatable-setting.js') ?>"></script>
+  <script src="<?= base_url('global/jquery.dataTables.min.js') ?>"></script>
+  <script src="<?= base_url('global/sweetalert2@11.js') ?>"></script>
   <?= $this->renderSection('script') ?>
 </body>
 
