@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/vendors/styles/icon-font.min.css') ?>" />
   <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/vendors/styles/style.css') ?>" />
   <link rel="stylesheet" type="text/css" href="<?= base_url('global/jquery.dataTables.min.css') ?>" />
+  <link rel="stylesheet" href="<?= base_url('global/select2.min.css') ?>">
   <title><?= isset($pageTitle) ? $pageTitle : 'Admin' ?></title>
 </head>
 
@@ -291,6 +292,11 @@
               <span class="micon bi bi-building"></span><span class="mtext">Building</span>
             </a>
           </li>
+          <li>
+            <a href="<?= route_to('admin.room') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-door-open"></span><span class="mtext">Room</span>
+            </a>
+          </li>
           <!-- <li>
             <a href="javascript:;" class="dropdown-toggle">
               <span class="micon bi bi-file-pdf"></span><span class="mtext">Documentation</span>
@@ -320,6 +326,7 @@
   <script src="<?= base_url('admin-assets/vendors/scripts/layout-settings.js') ?>"></script>
   <script src="<?= base_url('global/jquery.dataTables.min.js') ?>"></script>
   <script src="<?= base_url('global/sweetalert2@11.js') ?>"></script>
+  <script src="<?= base_url('global/select2.min.js') ?>"></script>
   <?= $this->renderSection('script') ?>
 </body>
 

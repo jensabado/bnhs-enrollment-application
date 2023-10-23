@@ -52,4 +52,21 @@ class Building extends Model
             return false; // Update failed
         }
     }
+
+    public function getAllData()
+    {
+        $builder = $this->db->table('tbl_building')
+        ->select('id, building')
+        ->where('is_deleted', 'no');
+
+        $query = $builder->get();
+
+        if($query->getNumRows() > 0) {
+            $results = $query->getResult();
+        } else {
+            $results = null;
+        }
+
+        return $results;
+    }
 }

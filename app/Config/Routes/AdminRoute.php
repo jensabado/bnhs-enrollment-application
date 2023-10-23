@@ -10,6 +10,8 @@ $routes->group('admin', function($routes) {
     $routes->post('get-building-data', 'BuildingController::getBuildingData', ['as' => 'admin.get-building-data']);
     $routes->post('edit-building', 'BuildingController::editBuilding', ['as' => 'admin.edit-building']);
     $routes->post('delete-building', 'BuildingController::deleteBuilding', ['as' => 'admin.delete-building']);
+    $routes->get('room', 'RoomController::room', ['as' => 'admin.room']);
+    $routes->post('room-data', 'RoomController::datatable', ['as' => 'admin.room-data']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {
