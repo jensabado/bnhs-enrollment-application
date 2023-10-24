@@ -12,6 +12,10 @@ $routes->group('admin', function($routes) {
     $routes->post('delete-building', 'BuildingController::deleteBuilding', ['as' => 'admin.delete-building']);
     $routes->get('room', 'RoomController::room', ['as' => 'admin.room']);
     $routes->post('room-data', 'RoomController::datatable', ['as' => 'admin.room-data']);
+    $routes->post('add-room', 'RoomController::addRoom', ['as' => 'admin.add-room']);
+    $routes->post('get-room-data', 'RoomController::getRoomData', ['as' => 'admin.get-room-data']);
+    $routes->post('edit-room', 'RoomController::editRoom', ['as' => 'admin.edit-room']);
+    $routes->post('delete-room', 'RoomController::deleteRoom', ['as' => 'admin.delete-room']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

@@ -25,74 +25,66 @@ class BuildingController extends BaseController
 
     public function datatable()
     {
-        $db = \Config\Database::connect();
-        $request = $this->request;
+        $buildingModel = new Building();
+
+        $request = service('request');
+        $postData = $request->getPost();
 
         $columns = ['id', 'building', 'created_at'];
 
-        $builder = $db->table('tbl_building')
+        $query = $buildingModel->table('tbl_building')
+            ->select('id, building, created_at')
             ->where('is_deleted', 'no');
 
-        if ($request->getPost('search')['value']) {
-            $searchValue = $request->getPost('search')['value'];
-            $builder->like('id', $searchValue)
-                ->orLike('building', $searchValue);
+        if (!empty($postData['search']['value'])) {
+            $query->groupStart()
+                ->like('building', $postData['search']['value'])
+                ->orLike('created_at', $postData['search']['value'])
+                ->groupEnd();
         }
 
-        if ($request->getPost('order')) {
-            $orderColumn = $columns[$request->getPost('order')[0]['column']];
-            $orderDirection = $request->getPost('order')[0]['dir'];
-            $builder->orderBy($orderColumn, $orderDirection);
-        } else {
-            $builder->orderBy('id', 'DESC');
+        if (!empty($postData['order'])) {
+            $orderColumn = $columns[$postData['order'][0]['column']];
+            $orderDirection = $postData['order'][0]['dir'];
+            $query->orderBy($orderColumn, $orderDirection);
         }
 
-        $totalFiltered = $builder->countAllResults(false); // Count all filtered rows without limits
-
-        if ($request->getPost('length') != -1) {
-            $start = $request->getPost('start');
-            $length = $request->getPost('length');
-            $builder->limit($length, $start);
+        if ($postData['length'] != -1) {
+            $query->limit($postData['length'], $postData['start']);
         }
 
-        $query = $builder->get();
-        $result = $query->getResultArray();
+        $results = $query->get()->getResultArray();
 
         $data = [];
-
-        $count = $start + 1;
-
-        foreach ($result as $row) {
-            $sub_array = [
+        $count = $postData['start'] + 1;
+        foreach ($results as $row) {
+            $subArray = [
                 $count++,
                 ucwords($row['building']),
                 $row['created_at'],
                 '<div class="btn-group">
-                    <button class="btn btn-primary btn-sm get_edit" data-id="'.$row['id'].'"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-danger btn-sm get_delete" data-id="'.$row['id'].'"><i class="bi bi-trash2-fill"></i></button>
+                    <button class="btn btn-primary btn-sm get_edit" data-id="' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
+                    <button class="btn btn-danger btn-sm get_delete" data-id="' . $row['id'] . '"><i class="bi bi-trash2-fill"></i></button>
                 </div>',
             ];
-
-            $data[] = $sub_array;
+            $data[] = $subArray;
         }
 
-        $output = [
-            'draw' => intval($request->getPost('draw')),
-            'recordsTotal' => $this->countAllData($db),
-            'recordsFiltered' => $totalFiltered,
-            'data' => $data,
-        ];
-
-        return $this->response->setJSON($output);
-    }
-
-    private function countAllData($db)
-    {
-        $query = $db->table('tbl_building')
+        // Get the total records count
+        $totalRecords = $buildingModel->table('tbl_building')
+            ->select('id, building, created_at')
             ->where('is_deleted', 'no')
             ->countAllResults();
 
-        return $query;
+        // Response data
+        $output = [
+            'draw' => intval($postData['draw']),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => count($results),
+            'data' => $data,
+        ];
+
+        return json_encode($output);
     }
 
     public function addBuilding()
@@ -150,23 +142,23 @@ class BuildingController extends BaseController
         $validator = \Config\Services::validation();
 
         $validator->setRules([
-            'edit_building' => 'required'
+            'edit_building' => 'required',
         ], [
             'edit_building' => [
-                'required' => 'Building Name required.'
-            ]
+                'required' => 'Building Name required.',
+            ],
         ]);
 
-        if(!$validator->withRequest($this->request)->run()) {
+        if (!$validator->withRequest($this->request)->run()) {
             $response = ['status' => 'error', 'message' => $validator->getErrors()];
         } else {
             $id = $this->request->getVar('edit_building_id');
             $newBuilding = $this->request->getVar('edit_building');
 
-            if(!$this->buildingModel->buildingExist($newBuilding, $id)) {
+            if (!$this->buildingModel->buildingExist($newBuilding, $id)) {
                 $update = $this->buildingModel->updateData($id, ['building' => $newBuilding]);
 
-                if($update) {
+                if ($update) {
                     $response = ['status' => 'success', 'message' => 'Building updated successfully.'];
                 }
             } else {
@@ -181,7 +173,7 @@ class BuildingController extends BaseController
     {
         $id = $this->request->getVar('id');
 
-        if($this->buildingModel->deleteData($id)) {
+        if ($this->buildingModel->deleteData($id)) {
             $response = ['status' => 'success', 'message' => 'Building deleted successfully.'];
         }
 

@@ -16,24 +16,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" id="add_form">
+        <form id="add_form">
+          <?= csrf_field(); ?>
+          <div class="p-0 d-none alert_div" id="add_form_alert_div"></div>
           <div class="form-group">
             <label for="">Building</label>
             <select name="add_building" id="add_building" class="form-control" style="width: 100% !important;">
               <option value="" selected>SELECT BUILDING</option>
               <?php if(!empty($buildingData) || $buildingData == null) { ?>
               <?php foreach($buildingData as $building) { ?>
-                <option value="<?= $building->id ?>"><?= ucwords($building->building) ?></option>
+              <option value="<?= $building->id ?>"><?= ucwords($building->building) ?></option>
               <?php } ?>
               <?php } else { ?>
-                <option value="">NO RESULT</option>
+              <option value="">NO RESULT</option>
               <?php } ?>
             </select>
             <span class="text-danger error" id="add_building_error"></span>
           </div>
           <div class="form-group">
             <label for="">Room Name</label>
-            <input type="text" name="" id="" class="form-control">
+            <input type="text" name="add_room" id="add_room" class="form-control" placeholder="Enter Room Name">
+            <span class="text-danger error" id="add_room_error"></span>
           </div>
         </form>
       </div>
@@ -56,7 +59,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Edit Building
+          Edit Room
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -64,17 +67,31 @@
       </div>
       <div class="modal-body">
         <form action="" id="edit_form">
+          <?= csrf_field(); ?>
+          <div class="p-0 d-none alert_div" id="edit_form_alert_div"></div>
           <div class="form-group d-none">
             <label for="">Building ID</label>
-            <input type="text" name="edit_building_id" id="edit_building_id" class="form-control"
-              placeholder="Enter Building Name">
+            <input type="text" name="edit_id" id="edit_id" class="form-control" placeholder="Enter Building Name">
             <span class="text-danger error" id="edit_building_id_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Building Name</label>
-            <input type="text" name="edit_building" id="edit_building" class="form-control"
-              placeholder="Enter Building Name">
+            <label for="">Building</label>
+            <select name="edit_building" id="edit_building" class="form-control" style="width: 100% !important;">
+              <option value="" selected>SELECT BUILDING</option>
+              <?php if(!empty($buildingData) || $buildingData == null) { ?>
+              <?php foreach($buildingData as $building) { ?>
+              <option value="<?= $building->id ?>"><?= ucwords($building->building) ?></option>
+              <?php } ?>
+              <?php } else { ?>
+              <option value="">NO RESULT</option>
+              <?php } ?>
+            </select>
             <span class="text-danger error" id="edit_building_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Room Name</label>
+            <input type="text" name="edit_room" id="edit_room" class="form-control" placeholder="Enter Room Name">
+            <span class="text-danger error" id="edit_room_error"></span>
           </div>
         </form>
       </div>
@@ -115,6 +132,21 @@
     </div>
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
       <button class="btn btn-primary mb-4" id="add_btn"><i class="bi bi-plus-lg"></i> ADD ROOM</button>
+      <h6 class="mb-1">Filter: </h6>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <select name="filter_building" id="filter_building" class="form-control" style="width: 100% !important;">
+            <option value="" selected>SELECT BUILDING</option>
+            <?php if(!empty($buildingData) || $buildingData == null) { ?>
+            <?php foreach($buildingData as $building) { ?>
+            <option value="<?= $building->id ?>"><?= ucwords($building->building) ?></option>
+            <?php } ?>
+            <?php } else { ?>
+            <option value="">NO RESULT</option>
+            <?php } ?>
+          </select>
+        </div>
+      </div>
       <div class="table-responsive">
         <table class="data-table table stripe hover nowrap" id="table">
           <thead>
@@ -137,7 +169,7 @@
 <script>
 $(document).ready(function() {
   // select2 initialization
-  $('#add_building').select2();
+  $('#add_building, #edit_building, #filter_building').select2();
 
   // datatables initialization
   var dataTable = $('#table').DataTable();
@@ -155,6 +187,11 @@ $(document).ready(function() {
     "ajax": {
       url: "<?= route_to('admin.room-data') ?>",
       type: "POST",
+      data: function(d) {
+        return $.extend({}, d, {
+          "filter_building": $('#filter_building').val()
+        })
+      },
       error: function(xhr, error, code) {
         console.log(xhr, code);
       }
@@ -177,6 +214,11 @@ $(document).ready(function() {
 
   dataTable.draw();
 
+  // filter onchange
+  $('#filter_building').bind("keyup change", function() {
+    dataTable.draw();
+  })
+
   // modal action
   // add modal
   $(document).on('click', '#add_btn', function(e) {
@@ -195,16 +237,20 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?= route_to('admin.get-building-data') ?>",
+      url: "<?= route_to('admin.get-room-data') ?>",
       data: form,
+      headers: {
+        'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
+      },
       contentType: false,
       processData: false,
       cache: false,
       success: function(response) {
         console.log(response);
+        $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
         if (response.status === 'success') {
           for (const [field, data] of Object.entries(response.message)) {
-            $(`#${field}`).val(`${data}`);
+            $(`#${field}`).val(`${data}`).trigger('change');
           }
           $('#edit_modal').modal('show');
         }
@@ -224,8 +270,11 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?=route_to('admin.add-building')?>",
+      url: "<?=route_to('admin.add-room')?>",
       data: form,
+      headers: {
+        'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
+      },
       contentType: false,
       processData: false,
       cache: false,
@@ -237,6 +286,9 @@ $(document).ready(function() {
       },
       success: function(response) {
         $('.error').text('');
+        $('.alert_div').addClass('d-none');
+        $('.alert_div .alert').remove();
+        $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
         if (response.status === 'success') {
           $('#add_modal').modal('hide');
           dataTable.ajax.reload(null, false);
@@ -256,6 +308,14 @@ $(document).ready(function() {
           for (const [field, errorMessage] of Object.entries(response.message)) {
             $(`#${field}_error`).text(`${errorMessage}`);
           }
+        } else if (response.status === 'error_alert') {
+          $('#add_form_alert_div').removeClass('d-none');
+          $('#add_form_alert_div').append(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>${response.message}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>`);
         }
       },
       error: function(xhr, status, error) {
@@ -272,8 +332,11 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?= route_to('admin.edit-building') ?>",
+      url: "<?= route_to('admin.edit-room') ?>",
       data: form,
+      headers: {
+        'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
+      },
       contentType: false,
       processData: false,
       cache: false,
@@ -285,7 +348,10 @@ $(document).ready(function() {
       },
       success: function(response) {
         console.log(response);
+        $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
         $('.error').text('');
+        $('.alert_div').addClass('d-none');
+        $('.alert_div .alert').remove();
         if (response.status === 'success') {
           $('#edit_modal').modal('hide');
           dataTable.ajax.reload(null, false);
@@ -320,6 +386,7 @@ $(document).ready(function() {
     const id = $(this).data('id');
     let form = new FormData();
     form.append('id', id);
+    console.log(id);
 
     Swal.fire({
       icon: 'question',
@@ -336,7 +403,7 @@ $(document).ready(function() {
       if (result.isConfirmed) {
         $.ajax({
           type: "POST",
-          url: "<?= route_to('admin.delete-building') ?>",
+          url: "<?= route_to('admin.delete-room') ?>",
           data: form,
           processData: false,
           contentType: false,
@@ -371,6 +438,9 @@ $(document).ready(function() {
                 background: '#fff',
               })
             }
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
           }
         })
       }

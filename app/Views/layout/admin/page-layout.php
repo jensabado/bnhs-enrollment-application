@@ -157,13 +157,15 @@
           </div>
         </div>
       </div>
-      <div class="user-info-dropdown">
+      <div class="user-info-dropdown d-flex align-items-center">
         <div class="dropdown">
           <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-            <span class="user-icon">
-              <img src="<?= base_url('admin-assets/vendors/images/photo1.jpg') ?>" alt="" />
+            <span class="user-icon" style="width: 40px; height: 40px;">
+              <img
+                src="<?= !empty(getUser()->photo) ? base_url('/admin-assets/vendors/images/avatar/' . getUser()->photo) : base_url('admin-assets/vendors/images/avatar/avatar-1.png') ?>"
+                alt="" />
             </span>
-            <span class="user-name">Ross C. Lopez</span>
+            <span class="user-name"><?= getUser()->name; ?></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
             <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>

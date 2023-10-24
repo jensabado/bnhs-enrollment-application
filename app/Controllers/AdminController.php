@@ -10,6 +10,7 @@ use App\Models\Admin;
 class AdminController extends BaseController
 {
     protected $db;
+    protected $helpers = ['CIFunctions'];
 
     public function __construct()
     {
