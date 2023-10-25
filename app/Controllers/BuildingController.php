@@ -25,66 +25,71 @@ class BuildingController extends BaseController
 
     public function datatable()
     {
-        $buildingModel = new Building();
-
         $request = service('request');
-        $postData = $request->getPost();
 
-        $columns = ['id', 'building', 'created_at'];
+        $column = ['id', 'building', 'created_at'];
 
-        $query = $buildingModel->table('tbl_building')
-            ->select('id, building, created_at')
-            ->where('is_deleted', 'no');
+        $db = db_connect();
 
-        if (!empty($postData['search']['value'])) {
-            $query->groupStart()
-                ->like('building', $postData['search']['value'])
-                ->orLike('created_at', $postData['search']['value'])
-                ->groupEnd();
+        $query = "SELECT id, building, created_at FROM tbl_building WHERE is_deleted = 'no'";
+
+        if ($request->getPost('search')['value']) {
+            $query .= '
+                AND (building LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR created_at LIKE "%' . $request->getPost('search')['value'] . '%" )
+                ';
         }
 
-        if (!empty($postData['order'])) {
-            $orderColumn = $columns[$postData['order'][0]['column']];
-            $orderDirection = $postData['order'][0]['dir'];
-            $query->orderBy($orderColumn, $orderDirection);
+        if ($request->getPost('order')) {
+            $query .= 'ORDER BY ' . $column[$request->getPost('order')[0]['column']] . ' ' . $request->getPost('order')[0]['dir'] . ' ';
+        } else {
+            $query .= 'ORDER BY id DESC ';
         }
 
-        if ($postData['length'] != -1) {
-            $query->limit($postData['length'], $postData['start']);
+        $query1 = '';
+
+        if ($request->getPost('length') != -1) {
+            $query1 = 'LIMIT ' . $request->getPost('start') . ', ' . $request->getPost('length');
         }
 
-        $results = $query->get()->getResultArray();
+        $statement = $db->query($query);
+        $number_filter_row = $statement->getNumRows();
+
+        $query .= $query1;
+        $statement = $db->query($query);
+        $result = $statement->getResult('array');
 
         $data = [];
-        $count = $postData['start'] + 1;
-        foreach ($results as $row) {
-            $subArray = [
-                $count++,
-                ucwords($row['building']),
-                $row['created_at'],
-                '<div class="btn-group">
-                    <button class="btn btn-primary btn-sm get_edit" data-id="' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-danger btn-sm get_delete" data-id="' . $row['id'] . '"><i class="bi bi-trash2-fill"></i></button>
-                </div>',
-            ];
-            $data[] = $subArray;
+
+        $count = ($request->getPost('start') / $request->getPost('length')) * $request->getPost('length') + 1;
+
+        foreach ($result as $row) {
+            $sub_array = [];
+            $sub_array[] = $count++;
+            $sub_array[] = ucwords($row['building']);
+            $sub_array[] = $row['created_at'];
+            $sub_array[] = '<div class="btn-group">
+                                <button class="btn btn-primary btn-sm get_edit" data-id="' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
+                                <button class="btn btn-danger btn-sm get_delete" data-id="' . $row['id'] . '"><i class="bi bi-trash2-fill"></i></button>
+                            </div>';
+            $data[] = $sub_array;
         }
 
-        // Get the total records count
-        $totalRecords = $buildingModel->table('tbl_building')
-            ->select('id, building, created_at')
-            ->where('is_deleted', 'no')
-            ->countAllResults();
-
-        // Response data
         $output = [
-            'draw' => intval($postData['draw']),
-            'recordsTotal' => $totalRecords,
-            'recordsFiltered' => count($results),
+            'draw' => (int) $request->getPost('draw'),
+            'recordsTotal' => $this->countAllData($db),
+            'recordsFiltered' => $number_filter_row,
             'data' => $data,
         ];
 
         return json_encode($output);
+    }
+
+    private function countAllData($db)
+    {
+        $query = "SELECT id, building, created_at FROM tbl_building WHERE is_deleted = 'no'";
+        $statement = $db->query($query);
+        return $statement->getNumRows();
     }
 
     public function addBuilding()

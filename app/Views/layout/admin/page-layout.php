@@ -296,7 +296,12 @@
           </li>
           <li>
             <a href="<?= route_to('admin.room') ?>" class="dropdown-toggle no-arrow">
-              <span class="micon bi bi-door-open"></span><span class="mtext">Room</span>
+              <span class="micon bi bi-door-closed"></span><span class="mtext">Room</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= route_to('admin.section') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-door-open"></span><span class="mtext">Section</span>
             </a>
           </li>
           <!-- <li>

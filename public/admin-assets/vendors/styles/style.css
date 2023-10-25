@@ -4292,3 +4292,12 @@ body.IE .register-page-wrap .container {
 .select2-container .select2-selection--single {
 	height: 45px !important;
 }
+
+.select2-container .select2-selection {
+	font-size: 14px !important; /* Change this to your desired font size */
+}
+
+/* Adjust the font size of the Select2 options */
+.select2-dropdown .select2-results__option {
+	font-size: 14px !important; /* Change this to your desired font size */
+}

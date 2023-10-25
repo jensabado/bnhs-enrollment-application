@@ -48,7 +48,34 @@ class Room extends Model
         $builder->set(['is_deleted' => 'yes']);
 
         if ($builder->update()) {
-            return true; 
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getAllData()
+    {
+        $query = $this->table($this->table)
+            ->where('is_deleted', 'no')
+            ->get();
+
+        if ($query->getNumRows() > 0) {
+            return $query->getResult();
+        } else {
+            return null;
+        }
+    }
+
+    public function getDataByBuildingId($id)
+    {
+        $query = $this->select('id, room')
+            ->where('building_id', $id)
+            ->where('is_deleted', 'no')
+            ->get();
+
+        if ($query->getNumRows() > 0) {
+            return $query->getResultArray();
         } else {
             return false;
         }

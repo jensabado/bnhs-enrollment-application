@@ -9,7 +9,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Add Room
+          Add Section
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -20,9 +20,23 @@
           <?= csrf_field(); ?>
           <div class="p-0 d-none alert_div" id="add_form_alert_div"></div>
           <div class="form-group">
+            <label for="">Grade Level</label>
+            <select name="add_grade_level" id="add_grade_level" class="form-control" style="width: 100% !important;">
+              <option value="" selected disabled>SELECT GRADE LEVEL</option>
+              <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
+              <?php foreach($gradeLevelData as $gradeLevel) { ?>
+              <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
+              <?php } ?>
+              <?php } else { ?>
+              <option value="">NO RESULT</option>
+              <?php } ?>
+            </select>
+            <span class="text-danger error" id="add_grade_level_error"></span>
+          </div>
+          <div class="form-group">
             <label for="">Building</label>
             <select name="add_building" id="add_building" class="form-control" style="width: 100% !important;">
-              <option value="" selected>SELECT BUILDING</option>
+              <option value="" selected disabled>SELECT BUILDING</option>
               <?php if(!empty($buildingData) || $buildingData == null) { ?>
               <?php foreach($buildingData as $building) { ?>
               <option value="<?= $building->id ?>"><?= ucwords($building->building) ?></option>
@@ -34,9 +48,17 @@
             <span class="text-danger error" id="add_building_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Room Name</label>
-            <input type="text" name="add_room" id="add_room" class="form-control" placeholder="Enter Room Name">
+            <label for="">Room</label>
+            <select name="add_room" id="add_room" class="form-control" style="width: 100% !important;" disabled>
+              <option value="" selected disabled>SELECT BUILDING FIRST</option>
+            </select>
             <span class="text-danger error" id="add_room_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Section Name</label>
+            <input type="text" name="add_section" id="add_section" class="form-control"
+              placeholder="Enter Section Name">
+            <span class="text-danger error" id="add_section_error"></span>
           </div>
         </form>
       </div>
@@ -70,14 +92,29 @@
           <?= csrf_field(); ?>
           <div class="p-0 d-none alert_div" id="edit_form_alert_div"></div>
           <div class="form-group d-none">
-            <label for="">Building ID</label>
-            <input type="text" name="edit_id" id="edit_id" class="form-control" placeholder="Enter Building Name">
-            <span class="text-danger error" id="edit_building_id_error"></span>
+            <label for="">Section ID</label>
+            <input type="text" name="edit_id" id="edit_id" class="form-control" placeholder="">
+            <span class="text-danger error" id="edit_id_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Grade Level</label>
+            <select name="edit_grade_level" id="edit_grade_level" class="form-control"
+              style="width: 100% !important; font-size: 1rem !important;">
+              <option value="" selected disabled>SELECT GRADE LEVEL</option>
+              <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
+              <?php foreach($gradeLevelData as $gradeLevel) { ?>
+              <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
+              <?php } ?>
+              <?php } else { ?>
+              <option value="">NO RESULT</option>
+              <?php } ?>
+            </select>
+            <span class="text-danger error" id="edit_grade_level_error"></span>
           </div>
           <div class="form-group">
             <label for="">Building</label>
             <select name="edit_building" id="edit_building" class="form-control" style="width: 100% !important;">
-              <option value="" selected>SELECT BUILDING</option>
+              <option value="" selected disabled>SELECT BUILDING</option>
               <?php if(!empty($buildingData) || $buildingData == null) { ?>
               <?php foreach($buildingData as $building) { ?>
               <option value="<?= $building->id ?>"><?= ucwords($building->building) ?></option>
@@ -89,9 +126,17 @@
             <span class="text-danger error" id="edit_building_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Room Name</label>
-            <input type="text" name="edit_room" id="edit_room" class="form-control" placeholder="Enter Room Name">
+            <label for="">Room</label>
+            <select name="edit_room" id="edit_room" class="form-control" style="width: 100% !important;" disabled>
+              <option value="" selected disabled>SELECT BUILDING FIRST</option>
+            </select>
             <span class="text-danger error" id="edit_room_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Section Name</label>
+            <input type="text" name="edit_section" id="edit_section" class="form-control"
+              placeholder="Enter Section Name">
+            <span class="text-danger error" id="edit_section_error"></span>
           </div>
         </form>
       </div>
@@ -115,7 +160,7 @@
       <div class="row">
         <div class="col-md-6 col-sm-12">
           <div class="title">
-            <h4>Room</h4>
+            <h4>Section</h4>
           </div>
           <nav aria-label="breadcrumb" role="navigation">
             <ol class="breadcrumb">
@@ -123,7 +168,7 @@
                 <a href="<?=route_to('admin.home')?>">Home</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                Room
+                Section
               </li>
             </ol>
           </nav>
@@ -132,7 +177,8 @@
     </div>
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
       <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD ROOM</button>
-      <button class="btn btn-warning btn-sm mb-3" id="reset_filter"><i class="bi bi-arrow-clockwise"></i> RESET FILTER</button>
+      <button class="btn btn-warning btn-sm mb-3" id="reset_filter"><i class="bi bi-arrow-clockwise"></i> RESET
+        FILTER</button>
       <!-- <h6 class="mb-1">Filter: </h6> -->
       <div class="row mb-3">
         <div class="col-md-3">
@@ -149,12 +195,14 @@
         </div>
       </div>
       <div class="table-responsive">
-        <table class="data-table table stripe hover nowrap" id="table">
+        <table class="table hover nowrap" id="table">
           <thead>
             <tr>
               <th>#</th>
               <th>Building Name</th>
+              <th>Grade Level</th>
               <th>Room Name</th>
+              <th>Section Name</th>
               <th>Created At</th>
               <th class="datatable-nosort">Action</th>
             </tr>
@@ -170,7 +218,8 @@
 <script>
 $(document).ready(function() {
   // select2 initialization
-  $('#add_building, #edit_building, #filter_building').select2();
+  $('#add_grade_level, #add_building, #add_room, #edit_grade_level, #edit_building, #edit_room, #filter_building')
+    .select2();
 
   // datatables initialization
   var dataTable = $('#table').DataTable();
@@ -186,7 +235,7 @@ $(document).ready(function() {
     "scrollX": true,
     "sScrollXInner": "100%",
     "ajax": {
-      url: "<?= route_to('admin.room-data') ?>",
+      url: "<?= route_to('admin.section-data') ?>",
       type: "POST",
       data: function(d) {
         return $.extend({}, d, {
@@ -198,7 +247,7 @@ $(document).ready(function() {
       }
     },
     "order": [
-      [3, 'desc']
+      [5, 'desc']
     ],
     "lengthMenu": [
       [5, 10, 25, 50, -1],
@@ -214,6 +263,47 @@ $(document).ready(function() {
   }, 10000); // END DATATABLES
 
   dataTable.draw();
+
+  // dynamic dependent dropdown action
+  function populateRoomDropdown(id, targetDropdown) {
+    if (id === null) {
+      targetDropdown.empty().append('<option>SELECT BUILDING FIRST</option>').attr('disabled', true);
+    } else {
+      const form = new FormData();
+      form.append('building', id);
+      $.ajax({
+        type: 'POST',
+        url: '<?= route_to("admin.get-room-option") ?>',
+        data: form,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function(response) {
+          targetDropdown.empty().attr('disabled', false).append(
+            '<option value="" selected disabled>SELECT ROOM</option>');
+          if (response.status === 'success') {
+            for (const [id, value] of Object.entries(response.message)) {
+              targetDropdown.append(
+                `<option value="${value.id}">${value.room}</option>`
+              );
+            }
+          } else if (response.status === 'error') {
+            targetDropdown.append(`<option value="">${response.message}</option>`);
+          }
+        }
+      });
+    }
+  }
+
+  $('#add_building').on('change', function() {
+    const id = $(this).val();
+    populateRoomDropdown(id, $('#add_room'));
+  });
+
+  $('#edit_building').on('change', function() {
+    const id = $(this).val();
+    populateRoomDropdown(id, $('#edit_room'));
+  });
 
   // filter onchange
   $('#filter_building').bind("keyup change", function() {
@@ -235,38 +325,43 @@ $(document).ready(function() {
   })
 
   // edit modal
-  $(document).on('click', '.get_edit', function(e) {
-    e.preventDefault();
-
+  $(document).on('click', '.get_edit', function() {
     const id = $(this).data('id');
-    let form = new FormData();
+    const csrfToken = $('input[name="<?= csrf_token() ?>"]').val();
+    const form = new FormData();
     form.append('id', id);
+    var room_val = '';
 
     $.ajax({
-      type: "POST",
-      url: "<?= route_to('admin.get-room-data') ?>",
+      type: 'POST',
+      url: '<?= route_to("admin.get-section-data") ?>',
       data: form,
       headers: {
-        'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
+        'X-CSRF-TOKEN': csrfToken,
       },
       contentType: false,
       processData: false,
       cache: false,
       success: function(response) {
-        console.log(response);
         $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
         if (response.status === 'success') {
-          for (const [field, data] of Object.entries(response.message)) {
-            $(`#${field}`).val(`${data}`).trigger('change');
-          }
+          $.each(response.message, (field, val) => (
+            $(`#${field}`).val(val).trigger('change'),
+            room_val = (field === 'edit_room') ? val : room_val
+          ));
+
           $('#edit_modal').modal('show');
+          $('#edit_modal').on('shown.bs.modal', function() {
+            $('#edit_room').val(room_val).trigger('change');
+          });
+
         }
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);
-      }
-    })
-  })
+      },
+    });
+  });
 
   // submit forms
   // add form
@@ -277,7 +372,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?=route_to('admin.add-room')?>",
+      url: "<?=route_to('admin.add-section')?>",
       data: form,
       headers: {
         'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
@@ -354,7 +449,6 @@ $(document).ready(function() {
         $('#edit_form_submit_btn').attr('disabled', false);
       },
       success: function(response) {
-        console.log(response);
         $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
         $('.error').text('');
         $('.alert_div').addClass('d-none');
@@ -393,7 +487,6 @@ $(document).ready(function() {
     const id = $(this).data('id');
     let form = new FormData();
     form.append('id', id);
-    console.log(id);
 
     Swal.fire({
       icon: 'question',
@@ -416,7 +509,6 @@ $(document).ready(function() {
           contentType: false,
           cache: false,
           success: function(response) {
-            console.log(response);
             if (response.status === 'success') {
               dataTable.ajax.reload(null, false);
               Swal.fire({
@@ -457,10 +549,18 @@ $(document).ready(function() {
   // hide modal reset 
   $('#add_modal').on('hidden.bs.modal', function() {
     $(this).find('form').trigger('reset');
+    $('#add_room, #edit_room').empty();
+    $('#add_room, #edit_room').append(`<option>SELECT BUILDING FIRST</option>`);
+    $('#add_grade_level, #add_building, #add_room, #edit_grade_level, #edit_building, #edit_room').val('')
+      .trigger('change');
+    $('#add_room, #edit_room').attr('disabled', true);
   });
 
   $('#edit_modal').on('hidden.bs.modal', function() {
     $(this).find('form').trigger('reset');
+    $('#add_grade_level, #add_building, #add_room, #edit_grade_level, #edit_building, #edit_room').val('')
+      .trigger('change');
+    $('#add_room, #edit_room').attr('disabled', true);
   });
 })
 </script>
