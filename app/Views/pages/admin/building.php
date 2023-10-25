@@ -104,7 +104,7 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
       <button class="btn btn-primary mb-4" id="add_btn"><i class="bi bi-plus-lg"></i> ADD BUILDING</button>
       <div class="table-responsive">
-        <table class="data-table table stripe hover nowrap" id="table">
+        <table class="table hover nowrap" id="table">
           <thead>
             <tr>
               <th>#</th>

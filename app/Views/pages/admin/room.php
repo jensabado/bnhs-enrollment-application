@@ -149,7 +149,7 @@
         </div>
       </div>
       <div class="table-responsive">
-        <table class="data-table table stripe hover nowrap" id="table">
+        <table class="table hover nowrap" id="table">
           <thead>
             <tr>
               <th>#</th>

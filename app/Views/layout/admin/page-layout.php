@@ -304,6 +304,11 @@
               <span class="micon bi bi-door-open"></span><span class="mtext">Section</span>
             </a>
           </li>
+          <li>
+            <a href="<?= route_to('admin.subject') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-journals"></span><span class="mtext">Subject</span>
+            </a>
+          </li>
           <!-- <li>
             <a href="javascript:;" class="dropdown-toggle">
               <span class="micon bi bi-file-pdf"></span><span class="mtext">Documentation</span>

@@ -21,6 +21,14 @@ $routes->group('admin', function($routes) {
     $routes->post('section-data', 'SectionController::datatable', ['as' => 'admin.section-data']);
     $routes->post('add-section', 'SectionController::addSection', ['as' => 'admin.add-section']);
     $routes->post('get-section-data', 'SectionController::getSectionData', ['as' => 'admin.get-section-data']);
+    $routes->post('edit-section', 'SectionController::editSection', ['as' => 'admin.edit-section']);
+    $routes->post('delete-section', 'SectionController::deleteSection', ['as' => 'admin.delete-section']);
+    $routes->get('subject', 'SubjectController::subject', ['as' => 'admin.subject']);
+    $routes->post('subject-data', 'SubjectController::datatable', ['as' => 'admin.subject-data']);
+    $routes->post('add-subject', 'SubjectController::addSubject', ['as' => 'admin.add-subject']);
+    $routes->post('get-subject-data', 'SubjectController::getSubjectData', ['as' => 'admin.get-subject-data']);
+    $routes->post('edit-subject', 'SubjectController::editSubject', ['as' => 'admin.edit-subject']);
+    $routes->post('delete-subject', 'SubjectController::deleteSubject', ['as' => 'admin.delete-subject']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

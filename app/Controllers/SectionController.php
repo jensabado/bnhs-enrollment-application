@@ -59,7 +59,15 @@ class SectionController extends BaseController
         WHERE tbl_section.is_deleted = 'no' AND tbl_building.is_deleted = 'no' AND tbl_room.is_deleted = 'no'";
 
         if ($request->getPost('filter_building') != '') {
-            $query .= ' AND tbl_room.building_id = "' . $request->getPost('filter_building') . '"';
+            $query .= ' AND tbl_section.building_id = "' . $request->getPost('filter_building') . '"';
+        }
+
+        if ($request->getPost('filter_grade') != '') {
+            $query .= ' AND tbl_section.grade_level_id = "' . $request->getPost('filter_grade') . '"';
+        }
+
+        if ($request->getPost('filter_room') != '') {
+            $query .= ' AND tbl_section.room_id = "' . $request->getPost('filter_room') . '"';
         }
 
         if ($request->getPost('search')['value']) {
@@ -204,5 +212,74 @@ class SectionController extends BaseController
         ];
 
         return $this->response->setJSON(['status' => 'success', 'message' => $data, 'csrfName' => csrf_token(), 'csrfHash' => csrf_hash()]);
+    }
+
+    public function editSection()
+    {
+        $validator = \Config\Services::validation();
+
+        $validator->setRules([
+            'edit_grade_level' => 'required',
+            'edit_building' => 'required',
+            'edit_room' => 'required',
+            'edit_section' => 'required',
+        ], [
+            'edit_grade_level' => [
+                'required' => 'Select Grade Level first.',
+            ],
+            'edit_building' => [
+                'required' => 'Select Building first.',
+            ],
+            'edit_room' => [
+                'required' => 'Select Room first.',
+            ],
+            'edit_section' => [
+                'required' => 'Section Name is required.',
+            ],
+        ]);
+
+        if (!$validator->withRequest($this->request)->run()) {
+            $response = ['status' => 'error', 'message' => $validator->getErrors(), 'csrfName' => csrf_token(), 'csrfHash' => csrf_hash()];
+        } else {
+            $sectionModel = new Section();
+            $id = $this->request->getVar('edit_id');
+            $grade_level = $this->request->getVar('edit_grade_level');
+            $building = $this->request->getVar('edit_building');
+            $room = $this->request->getVar('edit_room');
+            $section = $this->request->getVar('edit_section');
+
+            if (!$sectionModel->sectionExists($building, $room, $grade_level, $section, $id)) {
+                $data = [
+                    'building_id' => $building,
+                    'grade_level_id' => $grade_level,
+                    'room_id' => $room,
+                    'section' => $section,
+                ];
+
+                $update = $sectionModel->updateData($id, $data);
+
+                if ($update) {
+                    $response = ['status' => 'success', 'message' => 'Section updated successfully.', 'csrfName' => csrf_token(), 'csrfHash' => csrf_hash()];
+                }
+            } else {
+                $response = ['status' => 'error_alert', 'message' => 'Section already exists in system.', 'csrfName' => csrf_token(), 'csrfHash' => csrf_hash()];
+            }
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function deleteSection()
+    {
+        $id = $this->request->getVar('id');
+        $sectionModel = new Section();
+
+        if ($sectionModel->deleteData($id)) {
+            $response = ['status' => 'success', 'message' => 'Section deleted successfully.'];
+        } else {
+            $response = ['status' => 'error', 'message' => 'Something went wrong'];
+        }
+
+        return $this->response->setJSON($response);
     }
 }
