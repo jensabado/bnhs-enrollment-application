@@ -284,8 +284,17 @@
       <!-- <h6 class="mb-1">Filter: </h6> -->
       <div class="row mb-3">
         <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-          <select name="filter_grade" id="filter_grade" class="form-control" style="width: 100% !important;">
-            <option value="" selected disabled>SELECT GRADE LEVEL</option>
+          <select name="filter_status" id="filter_status" class="form-control" style="width: 100% !important;">
+            <option value="" selected disabled>SELECT STATUS</option>
+            <option value="enable">ENABLED</option>
+            <option value="disable">DISABLED</option>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+          <select name="filter_gender" id="filter_gender" class="form-control" style="width: 100% !important;">
+            <option value="" selected disabled>SELECT GENDER</option>
+            <option value="FEMALE">FEMALE</option>
+            <option value="MALE">MALE</option>
           </select>
         </div>
       </div>
@@ -315,7 +324,7 @@
 <script>
 $(document).ready(function() {
   // Select2 Initialization
-  $('#add_gender, #edit_gender').select2();
+  $('#add_gender, #edit_gender, #filter_status, #filter_gender').select2();
 
   // DataTables initialization
   var dataTable = $('#table').DataTable().destroy();
@@ -330,7 +339,8 @@ $(document).ready(function() {
       type: "POST",
       data: function(d) {
         return $.extend({}, d, {
-          "filter_grade": $('#filter_grade').val(),
+          "filter_status": $('#filter_status').val(),
+          "filter_gender": $('#filter_gender').val(),
         });
       },
       error: function(xhr, error, code) {
@@ -349,6 +359,15 @@ $(document).ready(function() {
   setInterval(() => dataTable.ajax.reload(null, false), 10000);
 
   dataTable.draw();
+
+  // Filter onchange
+  $('#filter_status, #filter_gender').on("input change", () => dataTable.draw());
+
+  // Reset filter
+  $('#reset_filter').on('click', (e) => {
+    e.preventDefault();
+    $('#filter_status, #filter_gender').val('').trigger('change');
+  });
 
   // disable drag and drop
   $('#add_avatar').on('dragover drop', function(event) {

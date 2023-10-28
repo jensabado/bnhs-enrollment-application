@@ -312,7 +312,12 @@
           </li>
           <li>
             <a href="<?= route_to('admin.teacher') ?>" class="dropdown-toggle no-arrow">
-              <span class="micon bi bi-journals"></span><span class="mtext">Teacher</span>
+              <span class="micon bi bi-person-video3"></span><span class="mtext">Teacher</span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= route_to('admin.teacher-subject') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-journal-bookmark"></span><span class="mtext">Teacher Subject</span>
             </a>
           </li>
           <!-- <li>

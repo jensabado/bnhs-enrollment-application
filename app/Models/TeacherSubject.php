@@ -4,20 +4,29 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Subject extends Model
+class TeacherSubject extends Model
 {
     protected $DBGroup = 'default';
-    protected $table = 'tbl_subject';
-    protected $allowedFields = ['id', 'grade_level_id', 'subject', 'is_deleted', 'created_at'];
+    protected $table = 'tbl_teacher_subject';
+    protected $primaryKey = 'id';
+    protected $allowedFields = ['id', 'teacher_id', 'grade_level_id', 'subject_id', 'is_deleted', 'created_at'];
 
-    public function subjectExists($grade_level, $subject, $id)
+    public function teacherSubjectExists($grade, $subject, $id)
     {
-        return $this->table($this->table)
+        return $this->where('grade_level_id', $grade)
+            ->where('subject_id', $subject)
             ->where('id !=', $id)
-            ->where('grade_level_id', $grade_level)
-            ->where('subject', $subject)
             ->where('is_deleted', 'no')
             ->countAllResults() > 0 ? true : false;
+    }
+
+    public function insertTeacherSubject($data)
+    {
+        if ($this->insert($data)) {
+            return true; // Insert successful
+        } else {
+            return false; // Insert failed
+        }
     }
 
     public function getDataById($id)
@@ -52,12 +61,5 @@ class Subject extends Model
         } else {
             return false;
         }
-    }
-
-    public function getSubjectsByGrade($grade)
-    {
-        return $this->asObject()->where('grade_level_id', $grade)
-            ->where('is_deleted', 'no')
-            ->findAll();
     }
 }

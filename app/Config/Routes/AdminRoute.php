@@ -42,6 +42,14 @@ $routes->group('admin', function($routes) {
     $routes->post('delete-teacher', 'TeacherController::deleteTeacher', ['as' => 'admin.delete-teacher']);
     $routes->post('disable-teacher', 'TeacherController::disable', ['as' => 'admin.disable-teacher']);
     $routes->post('enable-teacher', 'TeacherController::enable', ['as' => 'admin.enable-teacher']);
+    // TEACHER SUBJECT
+    $routes->get('teacher-subject', 'TeacherSubjectController::teacherSubject', ['as' => 'admin.teacher-subject']);
+    $routes->post('teacher-subject-data', 'TeacherSubjectController::datatable', ['as' => 'admin.teacher-subject-data']);
+    $routes->post('add-teacher-subject', 'TeacherSubjectController::addTeacherSubject', ['as' => 'admin.add-teacher-subject']);
+    $routes->post('get-teacher-subject-data', 'TeacherSubjectController::getTeacherSubjectData', ['as' => 'admin.get-teacher-subject-data']);
+    $routes->post('edit-teacher-subject', 'TeacherSubjectController::editTeacherSubject', ['as' => 'admin.edit-teacher-subject']);
+    $routes->post('delete-teacher-subject', 'TeacherSubjectController::deleteTeacherSubject', ['as' => 'admin.delete-teacher-subject']);
+    $routes->post('get-subject-option', 'TeacherSubjectController::getSubjectOption', ['as' => 'admin.get-subject-option']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

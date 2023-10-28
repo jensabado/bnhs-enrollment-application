@@ -30,9 +30,13 @@ class TeacherController extends BaseController
 
         $query = "SELECT * FROM tbl_teacher WHERE is_deleted = 'no'";
 
-        // if ($request->getPost('filter_grade') != '') {
-        //     $query .= ' AND tbl_subject.grade_level_id = "' . $request->getPost('filter_grade') . '"';
-        // }
+        if ($request->getPost('filter_status') != '') {
+            $query .= ' AND status = "' . $request->getPost('filter_status') . '"';
+        }
+
+        if ($request->getPost('filter_gender') != '') {
+            $query .= ' AND gender = "' . $request->getPost('filter_gender') . '"';
+        }
 
         if ($request->getPost('search')['value']) {
             $query .= '

@@ -77,9 +77,17 @@ class Teacher extends Model
     public function deleteData($id)
     {
         $data = [
-            'is_deleted' => 'yes'
+            'is_deleted' => 'yes',
         ];
 
         return $this->update($id, $data);
+    }
+
+    public function getAllData()
+    {
+        return $this->asObject()
+            ->where('is_deleted', 'no')
+            ->where('status', 'enable')
+            ->findAll();
     }
 }
