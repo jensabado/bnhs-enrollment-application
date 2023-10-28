@@ -37,9 +37,10 @@ class Teacher extends Model
         }
     }
 
-    public function emailExists($email)
+    public function emailExists($email, $id)
     {
         return $this->where('email', $email)
+            ->where('id !=', $id)
             ->where('is_deleted', 'no')
             ->countAllResults() > 0 ? true : false;
     }
@@ -57,6 +58,28 @@ class Teacher extends Model
 
     public function getTeacherById($id)
     {
-        return $this->find($id);
+        return $this->asObject()->find($id);
+    }
+
+    public function updateData($id, $data)
+    {
+        // Attempt to update the record
+        $result = $this->update($id, $data);
+
+        // Check if the update was successful
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteData($id)
+    {
+        $data = [
+            'is_deleted' => 'yes'
+        ];
+
+        return $this->update($id, $data);
     }
 }

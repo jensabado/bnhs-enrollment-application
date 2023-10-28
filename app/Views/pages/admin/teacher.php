@@ -1,6 +1,28 @@
 <?=$this->extend('layout/admin/page-layout')?>
 
 <?=$this->section('content')?>
+<!-- styles -->
+<style>
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container .form-control {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.password-container .bi {
+  position: absolute;
+  top: 18%;
+  font-size: 19px;
+  color: #495057;
+  right: 4%;
+  cursor: pointer;
+}
+</style>
+
 <!-- model section -->
 <!-- add -->
 <div class="modal fade" style="padding-right: 17px;" id="add_modal" tabindex="-1" role="dialog"
@@ -91,8 +113,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Password</label>
-                <input type="text" name="add_password" id="add_password" class="form-control"
-                  placeholder="Enter Password">
+                <div class="password-container" id="password-container">
+                  <input type="password" name="add_password" id="add_password" class="form-control"
+                    placeholder="Enter Password">
+                  <i class="bi bi-eye"></i>
+                </div>
                 <span class="text-danger error" style="font-size: 13px;" id="add_password_error"></span>
               </div>
             </div>
@@ -100,10 +125,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add_form_close_btn">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="add_form_close_btn">
           Close
         </button>
-        <button type="submit" class="btn btn-primary" form="add_form" id="add_form_submit_btn">
+        <button type="submit" class="btn btn-primary btn-sm" form="add_form" id="add_form_submit_btn">
           Add
         </button>
       </div>
@@ -114,11 +139,11 @@
 <!-- edit -->
 <div class="modal fade" style="padding-right: 17px;" id="edit_modal" tabindex="-1" role="dialog"
   aria-labelledby="myLargeModalLabel" aria-modal="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Edit Room
+          Edit Teacher
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -206,8 +231,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Password</label>
-                <input type="text" name="edit_password" id="edit_password" class="form-control"
-                  placeholder="Enter Password">
+                <div class="password-container" id="edit-password-container">
+                  <input type="password" name="edit_password" id="edit_password" class="form-control"
+                    placeholder="Enter Password">
+                  <i class="bi bi-eye"></i>
+                </div>
                 <span class="text-danger error" style="font-size: 13px;" id="edit_password_error"></span>
               </div>
             </div>
@@ -215,10 +243,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="edit_form_close_btn">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="edit_form_close_btn">
           Close
         </button>
-        <button type="submit" class="btn btn-primary" id="edit_form_submit_btn" form="edit_form">
+        <button type="submit" class="btn btn-primary btn-sm" id="edit_form_submit_btn" form="edit_form">
           Save changes
         </button>
       </div>
@@ -250,7 +278,7 @@
       </div>
     </div>
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-      <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD SUBJECT</button>
+      <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD TEACHER</button>
       <button class="btn btn-warning btn-sm mb-3" id="reset_filter"><i class="bi bi-arrow-clockwise"></i> RESET
         FILTER</button>
       <!-- <h6 class="mb-1">Filter: </h6> -->
@@ -335,15 +363,15 @@ $(document).ready(function() {
       reader.onload = function(e) {
         $("#imagePreview").attr("src", e.target.result);
         $("#imagePreview").css("display", "block");
-        // $("#edit_imagePreview").attr("src", e.target.result);
-        // $("#edit_imagePreview").css("display", "block");
+        $("#imagePreviewEdit").attr("src", e.target.result);
+        $("#imagePreviewEdit").css("display", "block");
       };
 
       reader.readAsDataURL(input.files[0]);
     }
   }
 
-  $("#add_avatar").on('change', function(e) {
+  $("#add_avatar, #edit_avatar").on('change', function(e) {
     e.preventDefault();
     readURL(this);
   });
@@ -587,11 +615,165 @@ $(document).ready(function() {
     })
   })
 
+  // edit form
+  $('#edit_form').on('submit', function(e) {
+    e.preventDefault();
+
+    let form = new FormData(this);
+
+    $.ajax({
+      type: "POST",
+      url: "<?= route_to('admin.edit-teacher') ?>",
+      data: form,
+      headers: {
+        'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
+      },
+      contentType: false,
+      processData: false,
+      cache: false,
+      beforeSend: function() {
+        $('.error').text('');
+        $('.alert_div').addClass('d-none');
+        $('.alert_div .alert').remove();
+        $('#edit_form_submit_btn').attr('disabled', true);
+      },
+      complete: function() {
+        $('#edit_form_submit_btn').attr('disabled', false);
+      },
+      success: function(response) {
+        console.log(response);
+        $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
+        if (response.status === 'success') {
+          $('#edit_modal').modal('hide');
+          dataTable.ajax.reload(null, false);
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: `${response.message}`,
+            iconColor: '#274c43',
+            confirmButtonColor: '#274c43',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            color: '#000',
+            background: '#fff',
+          })
+        } else if (response.status === 'error') {
+          $.each(response.message, function(field, error) {
+            $(`#${field}_error`).text(error);
+          });
+        } else if (response.status === 'error_alert') {
+          $('#edit_form_alert_div').removeClass('d-none');
+          $('#edit_form_alert_div').append(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>${response.message}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>`);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  })
+
+  // delete data
+  $(document).on('click', '.get_delete', function(e) {
+    e.preventDefault();
+
+    const id = $(this).data('id');
+    let form = new FormData();
+    form.append('id', id);
+
+    Swal.fire({
+      icon: 'question',
+      title: 'Hey!',
+      text: 'Are you sure you want to delete this data?',
+      iconColor: '#274c43',
+      confirmButtonColor: '#274c43',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      color: '#000',
+      background: '#fff',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: "<?= route_to('admin.delete-teacher') ?>",
+          data: form,
+          processData: false,
+          contentType: false,
+          cache: false,
+          success: function(response) {
+            if (response.status === 'success') {
+              dataTable.ajax.reload(null, false);
+              Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: `${response.message}`,
+                iconColor: '#274c43',
+                confirmButtonColor: '#274c43',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                color: '#000',
+                background: '#fff',
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Sorry!',
+                text: 'Something went wrong!',
+                iconColor: '#274c43',
+                confirmButtonColor: '#274c43',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                color: '#000',
+                background: '#fff',
+              })
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        })
+      }
+    })
+  })
+
+  $('#add_modal').on('hidden.bs.modal', function() {
+    $(this).find('form').trigger('reset');
+    $('#add_grade').val('').trigger('change');
+  });
+
+  $('#edit_modal').on('hidden.bs.modal', function() {
+    $(this).find('form').trigger('reset');
+    $('#edit_grade').val('').trigger('change');
+  });
+
   // hide modal reset 
   $('#add_modal').on('hidden.bs.modal', function() {
     $(this).find('form').trigger('reset');
     $('#add_gender').val('').trigger('change');
     $('#imagePreview').attr('src', '');
+  });
+
+  $('#edit_modal').on('hidden.bs.modal', function() {
+    $(this).find('form').trigger('reset');
+    $('#edit_gender').val('').trigger('change');
+    $('#imagePreviewEdit').attr('src', '');
+  });
+
+  // Password Show and Hide Action
+  $("#password-container i").click(function() {
+    togglePasswordVisibility("#add_password", this);
+  });
+
+  $("#edit-password-container i").click(function() {
+    togglePasswordVisibility("#edit_password", this);
   });
 })
 </script>

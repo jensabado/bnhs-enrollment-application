@@ -346,6 +346,22 @@
   <script src="<?= base_url('global/sweetalert2@11.js') ?>"></script>
   <script src="<?= base_url('global/select2.min.js') ?>"></script>
   <script src="<?= base_url('global/ijaboCropTool/ijaboCropTool.min.js') ?>"></script>
+
+  <script>
+  function togglePasswordVisibility(inputSelector, iconSelector) {
+    var passwordInput = $(inputSelector);
+    var icon = $(iconSelector);
+
+    if (passwordInput.attr("type") === "password") {
+      passwordInput.attr("type", "text");
+      icon.toggleClass("bi-eye bi-eye-slash");
+    } else {
+      passwordInput.attr("type", "password");
+      icon.toggleClass("bi-eye-slash bi-eye");
+    }
+  }
+  </script>
+
   <?= $this->renderSection('script') ?>
 </body>
 
