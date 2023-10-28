@@ -18,6 +18,7 @@
   <link rel="stylesheet" type="text/css" href="<?= base_url('admin-assets/vendors/styles/style.css') ?>" />
   <link rel="stylesheet" type="text/css" href="<?= base_url('global/jquery.dataTables.min.css') ?>" />
   <link rel="stylesheet" href="<?= base_url('global/select2.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('global/ijaboCropTool/ijaboCropTool.min.css') ?>">
   <title><?= isset($pageTitle) ? $pageTitle : 'Admin' ?></title>
 </head>
 
@@ -162,7 +163,7 @@
           <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
             <span class="user-icon" style="width: 40px; height: 40px;">
               <img
-                src="<?= !empty(getUser()->photo) ? base_url('/admin-assets/vendors/images/avatar/' . getUser()->photo) : base_url('admin-assets/vendors/images/avatar/avatar-1.png') ?>"
+                src="<?= !empty(getUser()->photo) ? base_url('/admin-assets/vendors/images/avatar/' . getUser()->photo) : base_url('avatar/no-image/avatar-1.png') ?>"
                 alt="" />
             </span>
             <span class="user-name"><?= getUser()->name; ?></span>
@@ -309,6 +310,11 @@
               <span class="micon bi bi-journals"></span><span class="mtext">Subject</span>
             </a>
           </li>
+          <li>
+            <a href="<?= route_to('admin.teacher') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-journals"></span><span class="mtext">Teacher</span>
+            </a>
+          </li>
           <!-- <li>
             <a href="javascript:;" class="dropdown-toggle">
               <span class="micon bi bi-file-pdf"></span><span class="mtext">Documentation</span>
@@ -339,6 +345,7 @@
   <script src="<?= base_url('global/jquery.dataTables.min.js') ?>"></script>
   <script src="<?= base_url('global/sweetalert2@11.js') ?>"></script>
   <script src="<?= base_url('global/select2.min.js') ?>"></script>
+  <script src="<?= base_url('global/ijaboCropTool/ijaboCropTool.min.js') ?>"></script>
   <?= $this->renderSection('script') ?>
 </body>
 

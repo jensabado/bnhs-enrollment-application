@@ -4,6 +4,9 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @-webkit-keyframes progress-bar-stripes {
 	0% {
 		background-position: 1rem 0;
@@ -77,9 +80,7 @@
 	--breakpoint-md: 768px;
 	--breakpoint-lg: 992px;
 	--breakpoint-xl: 1200px;
-	--font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
-		Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-family-sans-serif: 'Poppins', sans-serif;
 	--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
 		"Liberation Mono", "Courier New", monospace;
 }
@@ -90,7 +91,7 @@
 	box-sizing: border-box;
 }
 html {
-	font-family: sans-serif;
+	font-family: 'Poppins', sans-serif;
 	line-height: 1.15;
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: transparent;
@@ -109,9 +110,7 @@ section {
 }
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-family: 'Poppins', sans-serif;
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -6043,9 +6042,7 @@ a.close.disabled {
 .tooltip {
 	z-index: 1070;
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-family: 'Poppins', sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	line-height: 1.5;
@@ -6154,9 +6151,7 @@ a.close.disabled {
 	left: 0;
 	z-index: 1060;
 	max-width: 276px;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-family: 'Poppins', sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	line-height: 1.5;
@@ -11525,7 +11520,7 @@ ul.wysihtml5-toolbar .fa {
 	border-radius: 4px;
 	-webkit-box-sizing: content-box;
 	box-sizing: content-box;
-	font-family: Tahoma, sans-serif;
+	font-family: 'Poppins', sans-serif;
 	font-size: 14px;
 	color: #4a4a4a;
 	width: 250px;
@@ -12210,7 +12205,7 @@ ul.wysihtml5-toolbar .fa {
 }
 .td-wrap {
 	display: none;
-	font-family: sans-serif;
+	font-family: 'Poppins', sans-serif;
 	position: absolute;
 	-webkit-user-select: none;
 	-moz-user-select: none;

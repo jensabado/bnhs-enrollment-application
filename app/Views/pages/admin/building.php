@@ -21,7 +21,7 @@
             <label for="">Building Name</label>
             <input type="text" name="add_building" id="add_building" class="form-control"
               placeholder="Enter Building Name">
-            <span class="text-danger error" id="add_building_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_building_error"></span>
           </div>
         </form>
       </div>
@@ -56,13 +56,13 @@
             <label for="">Building ID</label>
             <input type="text" name="edit_building_id" id="edit_building_id" class="form-control"
               placeholder="Enter Building Name">
-            <span class="text-danger error" id="edit_building_id_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_building_id_error"></span>
           </div>
           <div class="form-group">
             <label for="">Building Name</label>
             <input type="text" name="edit_building" id="edit_building" class="form-control"
               placeholder="Enter Building Name">
-            <span class="text-danger error" id="edit_building_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_building_error"></span>
           </div>
         </form>
       </div>

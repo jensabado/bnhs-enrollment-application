@@ -31,13 +31,13 @@
               <option value="">NO RESULT</option>
               <?php } ?>
             </select>
-            <span class="text-danger error" id="add_grade_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_grade_error"></span>
           </div>
           <div class="form-group">
             <label for="">Subject Name</label>
             <input type="text" name="add_subject" id="add_subject" class="form-control"
               placeholder="Enter Subject Name">
-            <span class="text-danger error" id="add_subject_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_subject_error"></span>
           </div>
         </form>
       </div>
@@ -73,7 +73,7 @@
           <div class="form-group d-none">
             <label for="">Subject ID</label>
             <input type="text" name="edit_id" id="edit_id" class="form-control" placeholder="">
-            <span class="text-danger error" id="edit_id_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_id_error"></span>
           </div>
           <div class="form-group">
             <label for="">Grade Level</label>
@@ -87,13 +87,13 @@
               <option value="">NO RESULT</option>
               <?php } ?>
             </select>
-            <span class="text-danger error" id="edit_grade_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_grade_error"></span>
           </div>
           <div class="form-group">
             <label for="">Subject Name</label>
             <input type="text" name="edit_subject" id="edit_subject" class="form-control"
               placeholder="Enter Subject Name">
-            <span class="text-danger error" id="edit_subject_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_subject_error"></span>
           </div>
         </form>
       </div>

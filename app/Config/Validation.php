@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Validation\AvatarIfUploadedRule;
+use App\Validation\AvatarSizeRule;
+use App\Validation\isContactNum;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Validation\StrictRules\CreditCardRules;
 use CodeIgniter\Validation\StrictRules\FileRules;
@@ -25,6 +28,9 @@ class Validation extends BaseConfig
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
+        isContactNum::class,
+        AvatarSizeRule::class,
+        AvatarIfUploadedRule::class,
     ];
 
     /**

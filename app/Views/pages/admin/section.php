@@ -31,7 +31,7 @@
               <option value="">NO RESULT</option>
               <?php } ?>
             </select>
-            <span class="text-danger error" id="add_grade_level_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_grade_level_error"></span>
           </div>
           <div class="form-group">
             <label for="">Building</label>
@@ -45,20 +45,20 @@
               <option value="">NO RESULT</option>
               <?php } ?>
             </select>
-            <span class="text-danger error" id="add_building_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_building_error"></span>
           </div>
           <div class="form-group">
             <label for="">Room</label>
             <select name="add_room" id="add_room" class="form-control" style="width: 100% !important;" disabled>
               <option value="" selected disabled>SELECT BUILDING FIRST</option>
             </select>
-            <span class="text-danger error" id="add_room_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_room_error"></span>
           </div>
           <div class="form-group">
             <label for="">Section Name</label>
             <input type="text" name="add_section" id="add_section" class="form-control"
               placeholder="Enter Section Name">
-            <span class="text-danger error" id="add_section_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="add_section_error"></span>
           </div>
         </form>
       </div>
@@ -94,7 +94,7 @@
           <div class="form-group d-none">
             <label for="">Section ID</label>
             <input type="text" name="edit_id" id="edit_id" class="form-control" placeholder="">
-            <span class="text-danger error" id="edit_id_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_id_error"></span>
           </div>
           <div class="form-group">
             <label for="">Grade Level</label>
@@ -109,7 +109,7 @@
               <option value="">NO RESULT</option>
               <?php } ?>
             </select>
-            <span class="text-danger error" id="edit_grade_level_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_grade_level_error"></span>
           </div>
           <div class="form-group">
             <label for="">Building</label>
@@ -123,20 +123,20 @@
               <option value="">NO RESULT</option>
               <?php } ?>
             </select>
-            <span class="text-danger error" id="edit_building_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_building_error"></span>
           </div>
           <div class="form-group">
             <label for="">Room</label>
             <select name="edit_room" id="edit_room" class="form-control" style="width: 100% !important;" disabled>
               <option value="" selected disabled>SELECT BUILDING FIRST</option>
             </select>
-            <span class="text-danger error" id="edit_room_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_room_error"></span>
           </div>
           <div class="form-group">
             <label for="">Section Name</label>
             <input type="text" name="edit_section" id="edit_section" class="form-control"
               placeholder="Enter Section Name">
-            <span class="text-danger error" id="edit_section_error"></span>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_section_error"></span>
           </div>
         </form>
       </div>
@@ -380,7 +380,7 @@ $(document).ready(function() {
 
   // submit forms
   // add form
-  $('#add_form').on('submit', (e) => {
+  $('#add_form').on('submit', function(e) {
     e.preventDefault();
 
     let form = new FormData(this);

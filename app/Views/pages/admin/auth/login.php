@@ -1,6 +1,27 @@
 <?= $this->extend('layout/admin/auth-layout') ?>
 
 <?= $this->section('content') ?>
+<style>
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container .form-control {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.password-container .bi {
+  position: absolute;
+  top: 20%;
+  font-size: 22px;
+  color: #495057;
+  right: 11%;
+  cursor: pointer;
+}
+</style>
+
 <div class="login-box bg-white box-shadow border-radius-10">
   <div class="login-title">
     <h2 class="text-center text-primary">Admin Login</h2>
@@ -15,8 +36,11 @@
     </div>
     <div class="text-danger d-none errors" style="margin-top: -25px; margin-bottom: 15px;" id="email_error"></div>
     <div class="input-group custom">
-      <input type="password" class="form-control form-control-lg" placeholder="**********" id="password"
-        name="password" />
+      <div class="password-container">
+        <input type="password" class="form-control form-control-lg" placeholder="**********" id="password"
+          name="password" />
+        <i class="bi bi-eye"></i>
+      </div>
       <div class="input-group-append custom">
         <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
       </div>
@@ -95,6 +119,25 @@ $(document).ready(function() {
     });
   })
 
+})
+</script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script>
+$(document).ready(function() {
+  $(".password-container i").click(function() {
+    var passwordInput = $("#password");
+    var icon = $(this);
+
+    if (passwordInput.attr("type") === "password") {
+      passwordInput.attr("type", "text");
+      icon.removeClass("bi-eye").addClass("bi-eye-slash");
+    } else {
+      passwordInput.attr("type", "password");
+      icon.removeClass("bi-eye-slash").addClass("bi-eye");
+    }
+  });
 })
 </script>
 <?= $this->endSection() ?>

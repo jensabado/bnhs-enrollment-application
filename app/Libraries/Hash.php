@@ -5,7 +5,7 @@ class Hash
 {
     public static function make($password)
     {
-        return password_hash($password, PASSWORD_BCRYPT);
+        return md5($password);
     }
 
     public static function check($password, $dbPassword)
