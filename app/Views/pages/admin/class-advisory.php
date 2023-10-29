@@ -3,13 +3,13 @@
 <?=$this->section('content')?>
 <!-- model section -->
 <!-- add -->
-<div class="modal fade" style="padding-right: 17px;" id="add_modal" tabindex="-1" role="dialog"
+<div class="modal fade show" style="padding-right: 17px; display: block;" id="add_modal" tabindex="-1" role="dialog"
   aria-labelledby="myLargeModalLabel" aria-modal="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Add Subject
+          Add Classroom Advisory
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -21,7 +21,7 @@
           <div class="p-0 d-none alert_div" id="add_form_alert_div"></div>
           <div class="form-group">
             <label for="">Grade Level</label>
-            <select name="add_grade" id="add_grade" class="form-control" style="width: 100% !important;">
+            <select name="add_grade" id="add_grade" class="form-control" style="width: 100%;">
               <option value="" selected disabled>SELECT GRADE LEVEL</option>
               <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
               <?php foreach($gradeLevelData as $gradeLevel) { ?>
@@ -34,18 +34,33 @@
             <span class="text-danger error" style="font-size: 13px;" id="add_grade_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Subject Name</label>
-            <input type="text" name="add_subject" id="add_subject" class="form-control"
-              placeholder="Enter Subject Name">
-            <span class="text-danger error" style="font-size: 13px;" id="add_subject_error"></span>
+            <label for="">Section</label>
+            <select name="add_section" id="add_section" class="form-control" style="width: 100%;" disabled>
+              <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="add_section_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Teacher</label>
+            <select name="add_teacher" id="add_teacher" class="form-control" style="width: 100%;">
+              <option value="" selected disabled>SELECT TEACHER</option>
+              <?php if(!empty($teacherData) || $teacherData == null) { ?>
+              <?php foreach($teacherData as $teacher) { ?>
+              <option value="<?= $teacher->id ?>"><?= ucwords($teacher->f_name . ' ' . $teacher->l_name) ?></option>
+              <?php } ?>
+              <?php } else { ?>
+              <option value="">NO RESULT</option>
+              <?php } ?>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="add_teacher_error"></span>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add_form_close_btn">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="add_form_close_btn">
           Close
         </button>
-        <button type="submit" class="btn btn-primary" form="add_form" id="add_form_submit_btn">
+        <button type="submit" class="btn btn-primary btn-sm" form="add_form" id="add_form_submit_btn">
           Add
         </button>
       </div>
@@ -56,11 +71,11 @@
 <!-- edit -->
 <div class="modal fade" style="padding-right: 17px;" id="edit_modal" tabindex="-1" role="dialog"
   aria-labelledby="myLargeModalLabel" aria-modal="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Edit Subject
+          Edit Teacher Subject
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -71,37 +86,38 @@
           <?= csrf_field(); ?>
           <div class="p-0 d-none alert_div" id="edit_form_alert_div"></div>
           <div class="form-group d-none">
-            <label for="">Subject ID</label>
-            <input type="text" name="edit_id" id="edit_id" class="form-control" placeholder="">
-            <span class="text-danger error" style="font-size: 13px;" id="edit_id_error"></span>
+            <label for="">ID</label>
+            <input type="text" name="edit_id" id="edit_id" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Teacher</label>
+            <select name="edit_teacher" id="edit_teacher" class="form-control" style="width: 100%;">
+              <option value="" selected disabled>SELECT TEACHER</option>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_teacher_error"></span>
           </div>
           <div class="form-group">
             <label for="">Grade Level</label>
-            <select name="edit_grade" id="edit_grade" class="form-control" style="width: 100% !important;">
+            <select name="edit_grade" id="edit_grade" class="form-control" style="width: 100%;">
               <option value="" selected disabled>SELECT GRADE LEVEL</option>
-              <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
-              <?php foreach($gradeLevelData as $gradeLevel) { ?>
-              <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
-              <?php } ?>
-              <?php } else { ?>
               <option value="">NO RESULT</option>
-              <?php } ?>
             </select>
             <span class="text-danger error" style="font-size: 13px;" id="edit_grade_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Subject Name</label>
-            <input type="text" name="edit_subject" id="edit_subject" class="form-control"
-              placeholder="Enter Subject Name">
+            <label for="">Subject</label>
+            <select name="edit_subject" id="edit_subject" class="form-control" style="width: 100%;" disabled>
+              <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
+            </select>
             <span class="text-danger error" style="font-size: 13px;" id="edit_subject_error"></span>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="edit_form_close_btn">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="edit_form_close_btn">
           Close
         </button>
-        <button type="submit" class="btn btn-primary" id="edit_form_submit_btn" form="edit_form">
+        <button type="submit" class="btn btn-primary btn-sm" id="edit_form_submit_btn" form="edit_form">
           Save changes
         </button>
       </div>
@@ -117,7 +133,7 @@
       <div class="row">
         <div class="col-md-6 col-sm-12">
           <div class="title">
-            <h4>Subject</h4>
+            <h4>Class Advisory</h4>
           </div>
           <nav aria-label="breadcrumb" role="navigation">
             <ol class="breadcrumb">
@@ -125,7 +141,7 @@
                 <a href="<?=route_to('admin.home')?>">Home</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                Subject
+                Class Advisory
               </li>
             </ol>
           </nav>
@@ -133,7 +149,7 @@
       </div>
     </div>
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-      <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD SUBJECT</button>
+      <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD CLASS ADVISORY</button>
       <button class="btn btn-warning btn-sm mb-3" id="reset_filter"><i class="bi bi-arrow-clockwise"></i> RESET
         FILTER</button>
       <!-- <h6 class="mb-1">Filter: </h6> -->
@@ -141,13 +157,12 @@
         <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
           <select name="filter_grade" id="filter_grade" class="form-control" style="width: 100% !important;">
             <option value="" selected disabled>SELECT GRADE LEVEL</option>
-            <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
-            <?php foreach($gradeLevelData as $gradeLevel) { ?>
-            <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
-            <?php } ?>
-            <?php } else { ?>
-            <option value="">NO RESULT</option>
-            <?php } ?>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+          <select name="filter_subject" id="filter_subject" class="form-control" style="width: 100% !important;"
+            disabled>
+            <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
           </select>
         </div>
       </div>
@@ -157,7 +172,8 @@
             <tr>
               <th>#</th>
               <th>Grade Level</th>
-              <th>Subject</th>
+              <th>Section</th>
+              <th>Adviser</th>
               <th>Created At</th>
               <th class="datatable-nosort">Action</th>
             </tr>
@@ -172,8 +188,9 @@
 <?=$this->section('script')?>
 <script>
 $(document).ready(function() {
-  // Select2 initialization
-  $('#filter_grade, #add_grade').select2();
+  // Select2 Initialization
+  $('#add_grade, #add_section, #add_teacher, #edit_teacher, #edit_grade, #edit_subject, #filter_grade, #filter_subject')
+    .select2();
 
   // DataTables initialization
   var dataTable = $('#table').DataTable().destroy();
@@ -184,11 +201,12 @@ $(document).ready(function() {
     scrollX: true,
     sScrollXInner: "100%",
     ajax: {
-      url: "<?= route_to('admin.subject-data') ?>",
+      url: "<?= route_to('admin.class-advisory-data') ?>",
       type: "POST",
       data: function(d) {
         return $.extend({}, d, {
           "filter_grade": $('#filter_grade').val(),
+          "filter_subject": $('#filter_subject').val(),
         });
       },
       error: function(xhr, error, code) {
@@ -196,7 +214,7 @@ $(document).ready(function() {
       }
     },
     order: [
-      [3, 'desc']
+      [4, 'desc']
     ],
     lengthMenu: [
       [5, 10, 25, 50, -1],
@@ -209,12 +227,41 @@ $(document).ready(function() {
   dataTable.draw();
 
   // Filter onchange
-  $('#filter_grade').on("input change", () => dataTable.draw());
+  $('#filter_grade, #filter_subject').on("input change", () => dataTable.draw());
 
   // Reset filter
   $('#reset_filter').on('click', (e) => {
     e.preventDefault();
     $('#filter_grade').val('').trigger('change');
+    $('#filter_subject').empty();
+    $('#filter_subject').append(`<option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>`);
+    $('#filter_subject').val('').trigger('change');
+  });
+
+  // disable drag and drop
+  $('#add_avatar').on('dragover drop', function(event) {
+    event.preventDefault();
+  });
+
+  // image preview 
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $("#imagePreview").attr("src", e.target.result);
+        $("#imagePreview").css("display", "block");
+        $("#imagePreviewEdit").attr("src", e.target.result);
+        $("#imagePreviewEdit").css("display", "block");
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#add_avatar, #edit_avatar").on('change', function(e) {
+    e.preventDefault();
+    readURL(this);
   });
 
   // Modal action
@@ -224,16 +271,62 @@ $(document).ready(function() {
     $('#add_modal').modal('show');
   });
 
-  // Edit modal
+  // Dynamic dependent dropdown action
+  function populateRoomDropdown(id, targetDropdown) {
+    if (id === null) {
+      targetDropdown.empty().append('<option>SELECT GRADE LEVEL FIRST</option>').prop('disabled', true);
+    } else {
+      const form = new FormData();
+      form.append('id', id);
+      $.ajax({
+        type: 'POST',
+        url: '<?= route_to("admin.get-section-option") ?>',
+        data: form,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function(response) {
+          targetDropdown.empty().prop('disabled', false).append(
+            '<option value="" selected disabled>SELECT SECTION</option>');
+          if (response.status === 'success') {
+            console.log(response);
+            for (const [id, value] of Object.entries(response.message)) {
+              targetDropdown.append(`<option value="${value.id}">${value.subject}</option>`);
+            }
+          } else if (response.status === 'error') {
+            targetDropdown.append(`<option value="">${response.message}</option>`);
+          }
+        }
+      });
+    }
+  }
+
+  $('#add_grade').on('change', (e) => {
+    const id = $(e.target).val();
+    populateRoomDropdown(id, $('#add_section'));
+  })
+
+  $('#edit_grade').on('change', (e) => {
+    const id = $(e.target).val();
+    populateRoomDropdown(id, $('#edit_subject'));
+  })
+
+  $('#filter_grade').on('change', (e) => {
+    const id = $(e.target).val();
+    populateRoomDropdown(id, $('#filter_subject'));
+  })
+
+  // Get Edit Data
   $(document).on('click', '.get_edit', function() {
     const id = $(this).data('id');
     const csrfToken = $('input[name="<?= csrf_token() ?>"]').val();
     const form = new FormData();
     form.append('id', id);
+    let subject = '';
 
     $.ajax({
       type: 'POST',
-      url: '<?= route_to("admin.get-subject-data") ?>',
+      url: '<?= route_to("admin.get-teacher-subject-data") ?>',
       data: form,
       headers: {
         'X-CSRF-TOKEN': csrfToken,
@@ -246,9 +339,15 @@ $(document).ready(function() {
         if (response.status === 'success') {
           $('#edit_modal').modal('show');
 
-          $.each(response.message, (field, val) => (
-            $(`#${field}`).val(val).trigger('change')
-          ));
+          $.each(response.message, function(field, val) {
+            if (field === 'edit_subject') {
+              subject = val;
+            } else {
+              $(`#${field}`).val(val).trigger('change');
+            }
+          })
+
+          $('#edit_modal').on('shown.bs.modal', () => $('#edit_subject').val(subject).trigger('change'));
         }
       },
       error: function(xhr, status, error) {
@@ -262,29 +361,29 @@ $(document).ready(function() {
   $('#add_form').on('submit', function(e) {
     e.preventDefault();
 
-    let form = new FormData(this);
+    const form = new FormData(this);
 
     $.ajax({
       type: "POST",
-      url: "<?=route_to('admin.add-subject')?>",
+      url: "<?= route_to('admin.add-teacher-subject') ?>",
       data: form,
       headers: {
         'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
       },
-      contentType: false,
       processData: false,
+      contentType: false,
       cache: false,
       beforeSend: function() {
         $('#add_form_submit_btn').attr('disabled', true);
+        $('.error').text('');
+        $('.alert_div').addClass('d-none');
+        $('.alert_div .alert').remove();
       },
       complete: function() {
         $('#add_form_submit_btn').attr('disabled', false);
       },
       success: function(response) {
-        $('.error').text('');
-        $('.alert_div').addClass('d-none');
-        $('.alert_div .alert').remove();
-        $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
+        console.log(response);
         if (response.status === 'success') {
           $('#add_modal').modal('hide');
           dataTable.ajax.reload(null, false);
@@ -301,9 +400,9 @@ $(document).ready(function() {
             background: '#fff',
           })
         } else if (response.status === 'error') {
-          for (const [field, errorMessage] of Object.entries(response.message)) {
-            $(`#${field}_error`).text(`${errorMessage}`);
-          }
+          $.each(response.message, function(field, error) {
+            $(`#${field}_error`).text(error);
+          });
         } else if (response.status === 'error_alert') {
           $('#add_form_alert_div').removeClass('d-none');
           $('#add_form_alert_div').append(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -328,7 +427,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?= route_to('admin.edit-subject') ?>",
+      url: "<?= route_to('admin.edit-teacher-subject') ?>",
       data: form,
       headers: {
         'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
@@ -337,16 +436,17 @@ $(document).ready(function() {
       processData: false,
       cache: false,
       beforeSend: function() {
+        $('.error').text('');
+        $('.alert_div').addClass('d-none');
+        $('.alert_div .alert').remove();
         $('#edit_form_submit_btn').attr('disabled', true);
       },
       complete: function() {
         $('#edit_form_submit_btn').attr('disabled', false);
       },
       success: function(response) {
+        console.log(response);
         $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
-        $('.error').text('');
-        $('.alert_div').addClass('d-none');
-        $('.alert_div .alert').remove();
         if (response.status === 'success') {
           $('#edit_modal').modal('hide');
           dataTable.ajax.reload(null, false);
@@ -363,9 +463,9 @@ $(document).ready(function() {
             background: '#fff',
           })
         } else if (response.status === 'error') {
-          for (const [field, errorMessage] of Object.entries(response.message)) {
-            $(`#${field}_error`).text(`${errorMessage}`);
-          }
+          $.each(response.message, function(field, error) {
+            $(`#${field}_error`).text(error);
+          });
         } else if (response.status === 'error_alert') {
           $('#edit_form_alert_div').removeClass('d-none');
           $('#edit_form_alert_div').append(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -405,7 +505,7 @@ $(document).ready(function() {
       if (result.isConfirmed) {
         $.ajax({
           type: "POST",
-          url: "<?= route_to('admin.delete-subject') ?>",
+          url: "<?= route_to('admin.delete-teacher-subject') ?>",
           data: form,
           processData: false,
           contentType: false,
@@ -448,14 +548,17 @@ $(document).ready(function() {
     })
   })
 
+  // hide modal reset 
   $('#add_modal').on('hidden.bs.modal', function() {
     $(this).find('form').trigger('reset');
-    $('#add_grade').val('').trigger('change');
+    $('#add_teacher, #edit_teacher, #add_grade, #edit_grade, #add_subject, #edit_subject').val('').trigger(
+      'change');
   });
 
   $('#edit_modal').on('hidden.bs.modal', function() {
     $(this).find('form').trigger('reset');
-    $('#edit_grade').val('').trigger('change');
+    $('#add_teacher, #edit_teacher, #add_grade, #edit_grade, #add_subject, #edit_subject').val('').trigger(
+      'change');
   });
 })
 </script>

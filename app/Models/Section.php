@@ -55,4 +55,11 @@ class Section extends Model
             return false;
         }
     }
+
+    public function getSectionsByGrade($grade)
+    {
+        return $this->asObject()->where('grade_level_id', $grade)
+            ->where('is_deleted', 'no')
+            ->findAll();
+    }
 }

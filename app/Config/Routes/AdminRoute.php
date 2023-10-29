@@ -50,6 +50,14 @@ $routes->group('admin', function($routes) {
     $routes->post('edit-teacher-subject', 'TeacherSubjectController::editTeacherSubject', ['as' => 'admin.edit-teacher-subject']);
     $routes->post('delete-teacher-subject', 'TeacherSubjectController::deleteTeacherSubject', ['as' => 'admin.delete-teacher-subject']);
     $routes->post('get-subject-option', 'TeacherSubjectController::getSubjectOption', ['as' => 'admin.get-subject-option']);
+    // CLASS ADVISORY
+    $routes->get('class-advisory', 'ClassAdvisoryController::classAdvisory', ['as' => 'admin.class-advisory']);
+    $routes->post('class-advisory-data', 'ClassAdvisoryController::datatable', ['as' => 'admin.class-advisory-data']);
+    $routes->post('add-class-advisory', 'ClassAdvisoryController::addSubject', ['as' => 'admin.add-class-advisory']);
+    $routes->post('get-class-advisory-data', 'ClassAdvisoryController::getSubjectData', ['as' => 'admin.get-class-advisory-data']);
+    $routes->post('edit-class-advisory', 'ClassAdvisoryController::editSubject', ['as' => 'admin.edit-class-advisory']);
+    $routes->post('delete-class-advisory', 'ClassAdvisoryController::deleteSubject', ['as' => 'admin.delete-class-advisory']);
+    $routes->post('get-section-option', 'ClassAdvisoryController::getSectionOption', ['as' => 'admin.get-section-option']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {
