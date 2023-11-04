@@ -53,11 +53,21 @@ $routes->group('admin', function($routes) {
     // CLASS ADVISORY
     $routes->get('class-advisory', 'ClassAdvisoryController::classAdvisory', ['as' => 'admin.class-advisory']);
     $routes->post('class-advisory-data', 'ClassAdvisoryController::datatable', ['as' => 'admin.class-advisory-data']);
-    $routes->post('add-class-advisory', 'ClassAdvisoryController::addSubject', ['as' => 'admin.add-class-advisory']);
-    $routes->post('get-class-advisory-data', 'ClassAdvisoryController::getSubjectData', ['as' => 'admin.get-class-advisory-data']);
-    $routes->post('edit-class-advisory', 'ClassAdvisoryController::editSubject', ['as' => 'admin.edit-class-advisory']);
-    $routes->post('delete-class-advisory', 'ClassAdvisoryController::deleteSubject', ['as' => 'admin.delete-class-advisory']);
+    $routes->post('add-class-advisory', 'ClassAdvisoryController::addClassAdvisory', ['as' => 'admin.add-class-advisory']);
+    $routes->post('get-class-advisory-data', 'ClassAdvisoryController::getClassAdvisoryData', ['as' => 'admin.get-class-advisory-data']);
+    $routes->post('edit-class-advisory', 'ClassAdvisoryController::editClassAdvisory', ['as' => 'admin.edit-class-advisory']);
+    $routes->post('delete-class-advisory', 'ClassAdvisoryController::deleteClassAdvisory', ['as' => 'admin.delete-class-advisory']);
     $routes->post('get-section-option', 'ClassAdvisoryController::getSectionOption', ['as' => 'admin.get-section-option']);
+    // CLASS SCHEDULE
+    $routes->get('classroom-schedule', 'ClassroomScheduleController::classroomSchedule', ['as' => 'admin.classroom-schedule']);
+    $routes->post('classroom-schedule-data', 'ClassroomScheduleController::datatable', ['as' => 'admin.classroom-schedule-data']);
+    $routes->post('add-classroom-schedule', 'ClassroomScheduleController::addClassroomSchedule', ['as' => 'admin.add-classroom-schedule']);
+    $routes->post('get-classroom-schedule-data', 'ClassroomScheduleController::getClassroomScheduleData', ['as' => 'admin.get-classroom-schedule-data']);
+    $routes->post('edit-classroom-schedule', 'ClassroomScheduleController::editClassroomSchedule', ['as' => 'admin.edit-classroom-schedule']);
+    $routes->post('delete-classroom-schedule', 'ClassroomScheduleController::deleteClassroomSchedule', ['as' => 'admin.delete-classroom-schedule']);
+    $routes->post('get-section-option', 'ClassroomScheduleController::getSectionOption', ['as' => 'admin.get-section-option']);
+    $routes->post('get-subject-option', 'ClassroomScheduleController::getSubjectOption', ['as' => 'admin.get-subject-option']);
+    $routes->post('get-teacher-option', 'ClassroomScheduleController::getTeacherOption', ['as' => 'admin.get-teacher-option']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

@@ -9,7 +9,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Add Classroom Advisory
+          Add Subject Schedule
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -24,8 +24,8 @@
             <select name="add_grade" id="add_grade" class="form-control" style="width: 100%;">
               <option value="" selected disabled>SELECT GRADE LEVEL</option>
               <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
-              <?php foreach($gradeLevelData as $gradeLevel) { ?>
-              <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
+              <?php foreach($gradeLevelData as $grade) { ?>
+              <option value="<?= $grade->id ?>"><?= ucwords($grade->grade) ?></option>
               <?php } ?>
               <?php } else { ?>
               <option value="">NO RESULT</option>
@@ -41,16 +41,40 @@
             <span class="text-danger error" style="font-size: 13px;" id="add_section_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Teacher</label>
-            <select name="add_teacher" id="add_teacher" class="form-control" style="width: 100%;">
-              <option value="" selected disabled>SELECT TEACHER</option>
-              <?php if(!empty($teacherData) || $teacherData == null) { ?>
-              <?php foreach($teacherData as $teacher) { ?>
-              <option value="<?= $teacher->id ?>"><?= ucwords($teacher->f_name . ' ' . $teacher->l_name) ?></option>
+            <label for="">Start Time</label>
+            <input type="time" name="add_start_time" id="add_start_time" class="form-control">
+            <span class="text-danger error" style="font-size: 13px;" id="add_start_time_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">End Time</label>
+            <input type="time" name="add_end_time" id="add_end_time" class="form-control">
+            <span class="text-danger error" style="font-size: 13px;" id="add_end_time_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Day</label>
+            <select name="add_day" id="add_day" class="form-control" style="width: 100%;">
+              <option value="" selected disabled>SELECT DAY</option>
+              <?php if(!empty($dayData) || $dayData == null) { ?>
+              <?php foreach($dayData as $day) { ?>
+              <option value="<?= $day->id ?>"><?= ucwords($day->name) ?></option>
               <?php } ?>
               <?php } else { ?>
               <option value="">NO RESULT</option>
               <?php } ?>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="add_day_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Subject</label>
+            <select name="add_subject" id="add_subject" class="form-control" style="width: 100%;" disabled>
+              <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="add_subject_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Teacher</label>
+            <select name="add_teacher" id="add_teacher" class="form-control" style="width: 100%;" disabled>
+              <option value="" selected disabled>SELECT SUBJECT FIRST</option>
             </select>
             <span class="text-danger error" style="font-size: 13px;" id="add_teacher_error"></span>
           </div>
@@ -75,7 +99,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myLargeModalLabel">
-          Edit Teacher Subject
+          Edit Subject Schedule
         </h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           ×
@@ -94,8 +118,8 @@
             <select name="edit_grade" id="edit_grade" class="form-control" style="width: 100%;">
               <option value="" selected disabled>SELECT GRADE LEVEL</option>
               <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
-              <?php foreach($gradeLevelData as $gradeLevel) { ?>
-              <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
+              <?php foreach($gradeLevelData as $grade) { ?>
+              <option value="<?= $grade->id ?>"><?= ucwords($grade->grade) ?></option>
               <?php } ?>
               <?php } else { ?>
               <option value="">NO RESULT</option>
@@ -111,16 +135,40 @@
             <span class="text-danger error" style="font-size: 13px;" id="edit_section_error"></span>
           </div>
           <div class="form-group">
-            <label for="">Teacher</label>
-            <select name="edit_teacher" id="edit_teacher" class="form-control" style="width: 100%;">
-              <option value="" selected disabled>SELECT TEACHER</option>
-              <?php if(!empty($teacherData) || $teacherData == null) { ?>
-              <?php foreach($teacherData as $teacher) { ?>
-              <option value="<?= $teacher->id ?>"><?= ucwords($teacher->f_name . ' ' . $teacher->l_name) ?></option>
+            <label for="">Start Time</label>
+            <input type="time" name="edit_start_time" id="edit_start_time" class="form-control">
+            <span class="text-danger error" style="font-size: 13px;" id="edit_start_time_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">End Time</label>
+            <input type="time" name="edit_end_time" id="edit_end_time" class="form-control">
+            <span class="text-danger error" style="font-size: 13px;" id="edit_end_time_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Day</label>
+            <select name="edit_day" id="edit_day" class="form-control" style="width: 100%;">
+              <option value="" selected disabled>SELECT DAY</option>
+              <?php if(!empty($dayData) || $dayData == null) { ?>
+              <?php foreach($dayData as $day) { ?>
+              <option value="<?= $day->id ?>"><?= ucwords($day->name) ?></option>
               <?php } ?>
               <?php } else { ?>
               <option value="">NO RESULT</option>
               <?php } ?>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_day_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Subject</label>
+            <select name="edit_subject" id="edit_subject" class="form-control" style="width: 100%;" disabled>
+              <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
+            </select>
+            <span class="text-danger error" style="font-size: 13px;" id="edit_subject_error"></span>
+          </div>
+          <div class="form-group">
+            <label for="">Teacher</label>
+            <select name="edit_teacher" id="edit_teacher" class="form-control" style="width: 100%;" disabled>
+              <option value="" selected disabled>SELECT SUBJECT FIRST</option>
             </select>
             <span class="text-danger error" style="font-size: 13px;" id="edit_teacher_error"></span>
           </div>
@@ -146,7 +194,7 @@
       <div class="row">
         <div class="col-md-6 col-sm-12">
           <div class="title">
-            <h4>Class Advisory</h4>
+            <h4>Classroom Schedule</h4>
           </div>
           <nav aria-label="breadcrumb" role="navigation">
             <ol class="breadcrumb">
@@ -154,7 +202,7 @@
                 <a href="<?=route_to('admin.home')?>">Home</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                Class Advisory
+                Classroom Schedule
               </li>
             </ol>
           </nav>
@@ -162,21 +210,28 @@
       </div>
     </div>
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-      <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD CLASS ADVISORY</button>
+      <button class="btn btn-primary btn-sm mb-3" id="add_btn"><i class="bi bi-plus-lg"></i> ADD SUBJECT
+        SCHEDULE</button>
       <button class="btn btn-warning btn-sm mb-3" id="reset_filter"><i class="bi bi-arrow-clockwise"></i> RESET
         FILTER</button>
+      <button class="btn btn-info btn-sm mb-3" id="view_schedule"><i class="bi bi-printer"></i>  VIEW SCHEDULE</button>
       <!-- <h6 class="mb-1">Filter: </h6> -->
       <div class="row mb-3">
         <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
           <select name="filter_grade" id="filter_grade" class="form-control" style="width: 100% !important;">
             <option value="" selected disabled>SELECT GRADE LEVEL</option>
             <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
-            <?php foreach($gradeLevelData as $gradeLevel) { ?>
-            <option value="<?= $gradeLevel->id ?>"><?= ucwords($gradeLevel->grade) ?></option>
+            <?php foreach($gradeLevelData as $grade) { ?>
+            <option value="<?= $grade->id ?>"><?= ucwords($grade->grade) ?></option>
             <?php } ?>
             <?php } else { ?>
             <option value="">NO RESULT</option>
             <?php } ?>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+          <select name="filter_section" id="filter_section" class="form-control" style="width: 100%;" disabled>
+            <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
           </select>
         </div>
       </div>
@@ -185,9 +240,12 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Grade Level</th>
+              <th>Grade</th>
               <th>Section</th>
-              <th>Adviser</th>
+              <th>Time</th>
+              <th>Day</th>
+              <th>Subject</th>
+              <th>Teacher</th>
               <th>Created At</th>
               <th class="datatable-nosort">Action</th>
             </tr>
@@ -203,7 +261,7 @@
 <script>
 $(document).ready(function() {
   // Select2 Initialization
-  $('#add_grade, #add_section, #add_teacher, #edit_teacher, #edit_grade, #edit_section, #filter_grade, #filter_subject')
+  $('#add_grade, #add_section, #add_teacher, #add_day, #add_subject, #edit_teacher, #edit_grade, #edit_section, #edit_day, #edit_subject, #filter_grade, #filter_section')
     .select2();
 
   // DataTables initialization
@@ -215,7 +273,7 @@ $(document).ready(function() {
     scrollX: true,
     sScrollXInner: "100%",
     ajax: {
-      url: "<?= route_to('admin.class-advisory-data') ?>",
+      url: "<?= route_to('admin.classroom-schedule-data') ?>",
       type: "POST",
       data: function(d) {
         return $.extend({}, d, {
@@ -227,7 +285,7 @@ $(document).ready(function() {
       }
     },
     order: [
-      [4, 'desc']
+      [3, 'desc']
     ],
     lengthMenu: [
       [5, 10, 25, 50, -1],
@@ -240,12 +298,15 @@ $(document).ready(function() {
   dataTable.draw();
 
   // Filter onchange
-  $('#filter_grade').on("input change", () => dataTable.draw());
+  $('#filter_grade, #filter_section').on("input change", () => dataTable.draw());
 
   // Reset filter
   $('#reset_filter').on('click', (e) => {
     e.preventDefault();
     $('#filter_grade').val('').trigger('change');
+    $('#filter_section').empty();
+    $('#filter_section').append(`<option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>`);
+    $('#filter_section').val('').trigger('change');
   });
 
   // disable drag and drop
@@ -311,19 +372,96 @@ $(document).ready(function() {
     }
   }
 
+  function populateSubjectDropdown(id, targetDropdown) {
+    if (id === null) {
+      targetDropdown.empty().append('<option>SELECT GRADE LEVEL FIRST</option>').prop('disabled', true);
+    } else {
+      const form = new FormData();
+      form.append('id', id);
+      $.ajax({
+        type: 'POST',
+        url: '<?= route_to("admin.get-subject-option") ?>',
+        data: form,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function(response) {
+          targetDropdown.empty().prop('disabled', false).append(
+            '<option value="" selected disabled>SELECT SUBJECT</option>');
+          if (response.status === 'success') {
+            console.log(response);
+            for (const [id, value] of Object.entries(response.message)) {
+              targetDropdown.append(`<option value="${value.id}">${value.subject}</option>`);
+            }
+          } else if (response.status === 'error') {
+            targetDropdown.append(`<option value="">${response.message}</option>`);
+          }
+        }
+      });
+    }
+  }
+
+  function populateTeacherDropdown(id, targetDropdown, val = '') {
+    if (id === null) {
+      targetDropdown.empty().append('<option>SELECT SUBJECT FIRST</option>').prop('disabled', true);
+    } else {
+      const form = new FormData();
+      form.append('id', id);
+      $.ajax({
+        type: 'POST',
+        url: '<?= route_to("admin.get-teacher-option") ?>',
+        data: form,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function(response) {
+          targetDropdown.empty().prop('disabled', false).append(
+            '<option value="" selected disabled>SELECT TEACHER</option>');
+          if (response.status === 'success') {
+            console.log(response);
+            for (const [id, value] of Object.entries(response.message)) {
+              targetDropdown.append(
+                `<option value="${value.id}" ${val == value.id ? 'selected' : ''}>${value.f_name} ${value.l_name}</option>`
+              );
+            }
+          } else if (response.status === 'error') {
+            targetDropdown.append(`<option value="">${response.message}</option>`);
+          }
+        }
+      });
+    }
+  }
+
   $('#add_grade').on('change', (e) => {
     const id = $(e.target).val();
     populateRoomDropdown(id, $('#add_section'));
+    populateSubjectDropdown(id, $('#add_subject'));
   })
 
   $('#edit_grade').on('change', (e) => {
     const id = $(e.target).val();
     populateRoomDropdown(id, $('#edit_section'));
+    populateSubjectDropdown(id, $('#edit_subject'));
+  })
+
+  $('#filter_grade').on('change', (e) => {
+    const id = $(e.target).val();
+    populateRoomDropdown(id, $('#filter_section'));
   })
 
   $('#filter_grade').on('change', (e) => {
     const id = $(e.target).val();
     populateRoomDropdown(id, $('#filter_subject'));
+  })
+
+  $('#add_subject').on('change', (e) => {
+    const id = $(e.target).val();
+    populateTeacherDropdown(id, $('#add_teacher'));
+  })
+
+  $('#edit_subject').on('change', (e) => {
+    const id = $(e.target).val();
+    populateTeacherDropdown(id, $('#edit_teacher'));
   })
 
   // Get Edit Data
@@ -333,10 +471,12 @@ $(document).ready(function() {
     const form = new FormData();
     form.append('id', id);
     let section = '';
+    let subject = '';
+    let teacher = '';
 
     $.ajax({
       type: 'POST',
-      url: '<?= route_to("admin.get-class-advisory-data") ?>',
+      url: '<?= route_to("admin.get-classroom-schedule-data") ?>',
       data: form,
       headers: {
         'X-CSRF-TOKEN': csrfToken,
@@ -353,12 +493,22 @@ $(document).ready(function() {
           $.each(response.message, function(field, val) {
             if (field === 'edit_section') {
               section = val;
+            } else if (field === 'edit_subject') {
+              subject = val;
+            } else if (field === 'edit_teacher') {
+              teacher = val;
             } else {
               $(`#${field}`).val(val).trigger('change');
             }
           })
 
-          $('#edit_modal').on('shown.bs.modal', () => $('#edit_section').val(section).trigger('change'));
+          $('#edit_modal').on('shown.bs.modal', function(e) {
+            e.preventDefault();
+            console.log(teacher);
+            $('#edit_section').val(section).trigger('change');
+            $('#edit_subject').val(subject).trigger('change');
+            populateTeacherDropdown(subject, $('#edit_teacher'), teacher);
+          })
         }
       },
       error: function(xhr, status, error) {
@@ -376,7 +526,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?= route_to('admin.add-class-advisory') ?>",
+      url: "<?= route_to('admin.add-classroom-schedule') ?>",
       data: form,
       headers: {
         'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
@@ -438,7 +588,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "<?= route_to('admin.edit-class-advisory') ?>",
+      url: "<?= route_to('admin.edit-classroom-schedule') ?>",
       data: form,
       headers: {
         'X-CSRF-TOKEN': $('input[name="<?= csrf_token() ?>"]').val()
@@ -516,7 +666,7 @@ $(document).ready(function() {
       if (result.isConfirmed) {
         $.ajax({
           type: "POST",
-          url: "<?= route_to('admin.delete-class-advisory') ?>",
+          url: "<?= route_to('admin.delete-classroom-schedule') ?>",
           data: form,
           processData: false,
           contentType: false,
@@ -570,6 +720,8 @@ $(document).ready(function() {
     $(this).find('form').trigger('reset');
     $('#add_teacher, #edit_teacher, #add_grade, #edit_grade, #add_subject, #edit_subject').val('').trigger(
       'change');
+    $('.alert_div').addClass('d-none');
+    $('.alert_div .alert').remove();
   });
 })
 </script>

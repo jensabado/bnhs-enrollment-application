@@ -325,6 +325,11 @@
               <span class="micon bi bi-person-workspace"></span><span class="mtext">Class Advisory</span>
             </a>
           </li>
+          <li>
+            <a href="<?= route_to('admin.classroom-schedule') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-person-workspace"></span><span class="mtext">Classroom Schedule</span>
+            </a>
+          </li>
           <!-- <li>
             <a href="javascript:;" class="dropdown-toggle">
               <span class="micon bi bi-file-pdf"></span><span class="mtext">Documentation</span>

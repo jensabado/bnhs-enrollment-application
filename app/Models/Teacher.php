@@ -90,4 +90,12 @@ class Teacher extends Model
             ->where('status', 'enable')
             ->findAll();
     }
+
+    public function getTeachersBySubject($subject)
+    {
+        return $this->asObject()->select('tbl_teacher.id, f_name, l_name')
+            ->join('tbl_teacher_subject', 'tbl_teacher_subject.teacher_id = tbl_teacher.id', 'left')
+            ->where('tbl_teacher_subject.subject_id', $subject)
+            ->findAll();
+    }
 }
