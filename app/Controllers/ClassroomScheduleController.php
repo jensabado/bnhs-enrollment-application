@@ -363,4 +363,23 @@ class ClassroomScheduleController extends BaseController
 
         return $this->response->setJSON($response);
     }
+
+    public function getPrint($id)
+    {
+        $sectionModel = new Section();
+        $classroomScheduleModel = new ClassroomSchedule();
+
+        if($sectionModel->idExist($id)) {
+            $data = [
+                'pageTitle' => 'Section Schedule',
+                'id' => $id,
+                'schedHeader' => $classroomScheduleModel->schedHeader($id),
+                'schedules' => $classroomScheduleModel->schedule($id),
+            ];
+    
+            return view('pages/admin/classroom-schedule-print', $data);
+        } else {
+            return redirect()->route('admin.classroom-schedule');
+        }
+    }
 }

@@ -327,7 +327,7 @@
           </li>
           <li>
             <a href="<?= route_to('admin.classroom-schedule') ?>" class="dropdown-toggle no-arrow">
-              <span class="micon bi bi-person-workspace"></span><span class="mtext">Classroom Schedule</span>
+              <span class="micon bi bi-calendar"></span><span class="mtext">Classroom Schedule</span>
             </a>
           </li>
           <!-- <li>

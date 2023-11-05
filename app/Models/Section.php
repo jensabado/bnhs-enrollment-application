@@ -62,4 +62,11 @@ class Section extends Model
             ->where('is_deleted', 'no')
             ->findAll();
     }
+
+    public function idExist($id)
+    {
+        return $this->where('id', $id)
+        ->where('is_deleted', 'no')
+        ->countAllResults() > 0 ? true : false;
+    }
 }

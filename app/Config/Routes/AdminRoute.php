@@ -68,6 +68,7 @@ $routes->group('admin', function($routes) {
     $routes->post('get-section-option', 'ClassroomScheduleController::getSectionOption', ['as' => 'admin.get-section-option']);
     $routes->post('get-subject-option', 'ClassroomScheduleController::getSubjectOption', ['as' => 'admin.get-subject-option']);
     $routes->post('get-teacher-option', 'ClassroomScheduleController::getTeacherOption', ['as' => 'admin.get-teacher-option']);
+    $routes->get('classroom-schedule-print/(:any)', 'ClassroomScheduleController::getPrint/$1', ['as' => 'admin.classroom-schedule-print']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

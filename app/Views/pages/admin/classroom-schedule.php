@@ -214,12 +214,11 @@
         SCHEDULE</button>
       <button class="btn btn-warning btn-sm mb-3" id="reset_filter"><i class="bi bi-arrow-clockwise"></i> RESET
         FILTER</button>
-      <button class="btn btn-info btn-sm mb-3" id="view_schedule"><i class="bi bi-printer"></i>  VIEW SCHEDULE</button>
+      <button class="btn btn-info btn-sm mb-3" id="view_schedule"><i class="bi bi-printer"></i> VIEW SCHEDULE</button>
       <!-- <h6 class="mb-1">Filter: </h6> -->
       <div class="row mb-3">
         <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
           <select name="filter_grade" id="filter_grade" class="form-control" style="width: 100% !important;">
-            <option value="" selected disabled>SELECT GRADE LEVEL</option>
             <?php if(!empty($gradeLevelData) || $gradeLevelData == null) { ?>
             <?php foreach($gradeLevelData as $grade) { ?>
             <option value="<?= $grade->id ?>"><?= ucwords($grade->grade) ?></option>
@@ -230,8 +229,7 @@
           </select>
         </div>
         <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-          <select name="filter_section" id="filter_section" class="form-control" style="width: 100%;" disabled>
-            <option value="" selected disabled>SELECT GRADE LEVEL FIRST</option>
+          <select name="filter_section" id="filter_section" class="form-control" style="width: 100%;">
           </select>
         </div>
       </div>
@@ -259,6 +257,106 @@
 
 <?=$this->section('script')?>
 <script>
+// Dynamic dependent dropdown action
+function populateSectionDropdown(id, targetDropdown, filter = false) {
+  if (id === null) {
+    targetDropdown.empty().append('<option>SELECT GRADE LEVEL FIRST</option>').prop('disabled', true);
+  } else {
+    const form = new FormData();
+    form.append('id', id);
+    $.ajax({
+      type: 'POST',
+      url: '<?= route_to("admin.get-section-option") ?>',
+      data: form,
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        if (filter === false) {
+          targetDropdown.empty().prop('disabled', false).append(
+            '<option value="" selected disabled>SELECT SECTION</option>');
+        }
+        if (response.status === 'success') {
+          console.log(response);
+          for (const [id, value] of Object.entries(response.message)) {
+            targetDropdown.append(
+              `<option value="${value.id}">${value.section}</option>`);
+          }
+        } else if (response.status === 'error') {
+          targetDropdown.append(`<option value="">${response.message}</option>`);
+        }
+      }
+    });
+  }
+}
+
+function populateSubjectDropdown(id, targetDropdown) {
+  if (id === null) {
+    targetDropdown.empty().append('<option>SELECT GRADE LEVEL FIRST</option>').prop('disabled', true);
+  } else {
+    const form = new FormData();
+    form.append('id', id);
+    $.ajax({
+      type: 'POST',
+      url: '<?= route_to("admin.get-subject-option") ?>',
+      data: form,
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        targetDropdown.empty().prop('disabled', false).append(
+          '<option value="" selected disabled>SELECT SUBJECT</option>');
+        if (response.status === 'success') {
+          console.log(response);
+          for (const [id, value] of Object.entries(response.message)) {
+            targetDropdown.append(`<option value="${value.id}">${value.subject}</option>`);
+          }
+        } else if (response.status === 'error') {
+          targetDropdown.append(`<option value="">${response.message}</option>`);
+        }
+      }
+    });
+  }
+}
+
+function populateTeacherDropdown(id, targetDropdown, val = '') {
+  if (id === null) {
+    targetDropdown.empty().append('<option>SELECT SUBJECT FIRST</option>').prop('disabled', true);
+  } else {
+    const form = new FormData();
+    form.append('id', id);
+    $.ajax({
+      type: 'POST',
+      url: '<?= route_to("admin.get-teacher-option") ?>',
+      data: form,
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function(response) {
+        targetDropdown.empty().prop('disabled', false).append(
+          '<option value="" selected disabled>SELECT TEACHER</option>');
+        if (response.status === 'success') {
+          console.log(response);
+          for (const [id, value] of Object.entries(response.message)) {
+            targetDropdown.append(
+              `<option value="${value.id}" ${val == value.id ? 'selected' : ''}>${value.f_name} ${value.l_name}</option>`
+            );
+          }
+        } else if (response.status === 'error') {
+          targetDropdown.append(`<option value="">${response.message}</option>`);
+        }
+      }
+    });
+  }
+}
+
+$(window).on('load', function() {
+  if ($('#filter_grade').val() != '') {
+    const id = $('#filter_grade').val();
+    populateSectionDropdown(id, $('#filter_section'), true);
+  }
+})
+
 $(document).ready(function() {
   // Select2 Initialization
   $('#add_grade, #add_section, #add_teacher, #add_day, #add_subject, #edit_teacher, #edit_grade, #edit_section, #edit_day, #edit_subject, #filter_grade, #filter_section')
@@ -342,116 +440,22 @@ $(document).ready(function() {
     $('#add_modal').modal('show');
   });
 
-  // Dynamic dependent dropdown action
-  function populateRoomDropdown(id, targetDropdown) {
-    if (id === null) {
-      targetDropdown.empty().append('<option>SELECT GRADE LEVEL FIRST</option>').prop('disabled', true);
-    } else {
-      const form = new FormData();
-      form.append('id', id);
-      $.ajax({
-        type: 'POST',
-        url: '<?= route_to("admin.get-section-option") ?>',
-        data: form,
-        contentType: false,
-        processData: false,
-        cache: false,
-        success: function(response) {
-          targetDropdown.empty().prop('disabled', false).append(
-            '<option value="" selected disabled>SELECT SECTION</option>');
-          if (response.status === 'success') {
-            console.log(response);
-            for (const [id, value] of Object.entries(response.message)) {
-              targetDropdown.append(`<option value="${value.id}">${value.section}</option>`);
-            }
-          } else if (response.status === 'error') {
-            targetDropdown.append(`<option value="">${response.message}</option>`);
-          }
-        }
-      });
-    }
-  }
-
-  function populateSubjectDropdown(id, targetDropdown) {
-    if (id === null) {
-      targetDropdown.empty().append('<option>SELECT GRADE LEVEL FIRST</option>').prop('disabled', true);
-    } else {
-      const form = new FormData();
-      form.append('id', id);
-      $.ajax({
-        type: 'POST',
-        url: '<?= route_to("admin.get-subject-option") ?>',
-        data: form,
-        contentType: false,
-        processData: false,
-        cache: false,
-        success: function(response) {
-          targetDropdown.empty().prop('disabled', false).append(
-            '<option value="" selected disabled>SELECT SUBJECT</option>');
-          if (response.status === 'success') {
-            console.log(response);
-            for (const [id, value] of Object.entries(response.message)) {
-              targetDropdown.append(`<option value="${value.id}">${value.subject}</option>`);
-            }
-          } else if (response.status === 'error') {
-            targetDropdown.append(`<option value="">${response.message}</option>`);
-          }
-        }
-      });
-    }
-  }
-
-  function populateTeacherDropdown(id, targetDropdown, val = '') {
-    if (id === null) {
-      targetDropdown.empty().append('<option>SELECT SUBJECT FIRST</option>').prop('disabled', true);
-    } else {
-      const form = new FormData();
-      form.append('id', id);
-      $.ajax({
-        type: 'POST',
-        url: '<?= route_to("admin.get-teacher-option") ?>',
-        data: form,
-        contentType: false,
-        processData: false,
-        cache: false,
-        success: function(response) {
-          targetDropdown.empty().prop('disabled', false).append(
-            '<option value="" selected disabled>SELECT TEACHER</option>');
-          if (response.status === 'success') {
-            console.log(response);
-            for (const [id, value] of Object.entries(response.message)) {
-              targetDropdown.append(
-                `<option value="${value.id}" ${val == value.id ? 'selected' : ''}>${value.f_name} ${value.l_name}</option>`
-              );
-            }
-          } else if (response.status === 'error') {
-            targetDropdown.append(`<option value="">${response.message}</option>`);
-          }
-        }
-      });
-    }
-  }
-
   $('#add_grade').on('change', (e) => {
     const id = $(e.target).val();
-    populateRoomDropdown(id, $('#add_section'));
+    populateSectionDropdown(id, $('#add_section'));
     populateSubjectDropdown(id, $('#add_subject'));
   })
 
   $('#edit_grade').on('change', (e) => {
     const id = $(e.target).val();
-    populateRoomDropdown(id, $('#edit_section'));
+    populateSectionDropdown(id, $('#edit_section'));
     populateSubjectDropdown(id, $('#edit_subject'));
   })
 
   $('#filter_grade').on('change', (e) => {
     const id = $(e.target).val();
-    populateRoomDropdown(id, $('#filter_section'));
-  })
-
-  $('#filter_grade').on('change', (e) => {
-    const id = $(e.target).val();
-    populateRoomDropdown(id, $('#filter_subject'));
+    $('#filter_section').empty();
+    populateSectionDropdown(id, $('#filter_section'), true);
   })
 
   $('#add_subject').on('change', (e) => {
@@ -707,6 +711,14 @@ $(document).ready(function() {
         })
       }
     })
+  })
+
+  // print function 
+  $('#view_schedule').on('click', function(e) {
+    e.preventDefault();
+    const section = $('#filter_section').val();
+    const url = '<?= route_to('admin.classroom-schedule-print', '') ?>' + section;
+    window.location.href = url;
   })
 
   // hide modal reset 
