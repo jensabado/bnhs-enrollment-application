@@ -2,10 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use App\Libraries\CIAuth;
-use App\Libraries\Hash;
+use App\Models\Room;
 use App\Models\Admin;
+use App\Libraries\Hash;
+use App\Models\Section;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\Building;
+use App\Libraries\CIAuth;
+use App\Controllers\BaseController;
+use App\Models\Subject;
 
 class AdminController extends BaseController
 {
@@ -19,8 +25,22 @@ class AdminController extends BaseController
 
     public function index()
     {
+        $buildingModel = new Building();
+        $roomModel = new Room();
+        $sectionModel = new Section();
+        $teacherModel = new Teacher();
+        $subjectModel = new Subject();
+
         $data = [
-            'pageTitle' => 'Admin Home'
+            'pageTitle' => 'Admin Home',
+            'buildingCount' => $buildingModel->buildingCount(),
+            'roomCount' => $roomModel->roomCount(),
+            'sectionCount' => $sectionModel->sectionCount(),
+            'teacherCount' => $teacherModel->teacherCount(),
+            'grade7SubjectCount' => $subjectModel->grade7SubjectCount(),
+            'grade8SubjectCount' => $subjectModel->grade8SubjectCount(),
+            'grade9SubjectCount' => $subjectModel->grade9SubjectCount(),
+            'grade10SubjectCount' => $subjectModel->grade10SubjectCount(),
         ];
 
         return view('pages/admin/home', $data);
@@ -65,6 +85,15 @@ class AdminController extends BaseController
 
                 if(Hash::check($password, $adminData->password)) {
                     CIAuth::setCIAuthAdmin($adminData);
+
+                    if(!empty($this->request->getPost('remember'))) {
+                        setcookie('bnhsAdminEmail', $email, time() + (10 * 365 * 24 * 60 * 60));
+                        setcookie('bnhsAdminPass', $password, time() + (10 * 365 * 24 * 60 * 60));
+                    } else {
+                        setcookie('bnhsAdminEmail', '');
+                        setcookie('bnhsAdminPass', '');
+                    }
+
                     $response = ['status' => 'success'];
                 } else {
                     $response = ['status' => 'error_alert', 'message' => 'Sorry, the password you entered is incorrect. Please double-check your password and try again.'];

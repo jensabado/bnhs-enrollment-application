@@ -69,4 +69,9 @@ class Building extends Model
 
         return $results;
     }
+
+    public function buildingCount()
+    {
+        return $this->where('is_deleted', 'no')->countAllResults();
+    }
 }

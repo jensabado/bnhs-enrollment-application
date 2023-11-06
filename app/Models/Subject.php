@@ -60,4 +60,32 @@ class Subject extends Model
             ->where('is_deleted', 'no')
             ->findAll();
     }
+
+    public function grade7SubjectCount()
+    {
+        return $this->where('is_deleted', 'no')
+        ->where('grade_level_id', 1)
+        ->countAllResults();
+    }
+
+    public function grade8SubjectCount()
+    {
+        return $this->where('is_deleted', 'no')
+        ->where('grade_level_id', 2)
+        ->countAllResults();
+    }
+
+    public function grade9SubjectCount()
+    {
+        return $this->where('is_deleted', 'no')
+        ->where('grade_level_id', 3)
+        ->countAllResults();
+    }
+
+    public function grade10SubjectCount()
+    {
+        return $this->where('is_deleted', 'no')
+        ->where('grade_level_id', 4)
+        ->countAllResults();
+    }
 }

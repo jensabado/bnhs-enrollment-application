@@ -35,7 +35,7 @@ class ClassroomScheduleController extends BaseController
 
         $db = db_connect();
 
-        $query = "SELECT tbl_classroom_schedule.id, tbl_grade_level.grade, tbl_section.section, tbl_classroom_schedule.start_time, tbl_classroom_schedule.end_time, tbl_days.`name`, tbl_subject.`subject`, tbl_teacher.f_name, tbl_teacher.l_name, tbl_classroom_schedule.created_at
+        $query = "SELECT tbl_classroom_schedule.id, tbl_grade_level.grade, tbl_section.section, tbl_classroom_schedule.start_time, tbl_classroom_schedule.end_time, tbl_days.`name`, tbl_subject.`subject`, tbl_teacher.f_name, tbl_teacher.l_name, tbl_classroom_schedule.created_at, tbl_classroom_schedule.day_id
         FROM tbl_classroom_schedule
         LEFT JOIN tbl_section
         ON tbl_classroom_schedule.section_id = tbl_section.id
@@ -100,6 +100,7 @@ class ClassroomScheduleController extends BaseController
             $sub_array[] = ucwords($row['grade']);
             $sub_array[] = ucwords($row['section']);
             $sub_array[] = date('h:i A', strtotime($row['start_time'])) . ' - ' . date('h:i A', strtotime($row['end_time']));
+            $sub_array[] = ucwords($row['day_id']);
             $sub_array[] = ucwords($row['name']);
             $sub_array[] = ucwords($row['subject']);
             $sub_array[] = ucwords($row['f_name'] . ' ' . $row['l_name']);
@@ -123,7 +124,7 @@ class ClassroomScheduleController extends BaseController
 
     private function countAllData($db)
     {
-        $query = "SELECT tbl_classroom_schedule.id, tbl_grade_level.grade, tbl_section.section, tbl_classroom_schedule.start_time, tbl_classroom_schedule.end_time, tbl_days.`name`, tbl_subject.`subject`, tbl_teacher.f_name, tbl_teacher.l_name, tbl_classroom_schedule.created_at
+        $query = "SELECT tbl_classroom_schedule.id, tbl_grade_level.grade, tbl_section.section, tbl_classroom_schedule.start_time, tbl_classroom_schedule.end_time, tbl_days.`name`, tbl_subject.`subject`, tbl_teacher.f_name, tbl_teacher.l_name, tbl_classroom_schedule.created_at, tbl_classroom_schedule.day_id
         FROM tbl_classroom_schedule
         LEFT JOIN tbl_section
         ON tbl_classroom_schedule.section_id = tbl_section.id

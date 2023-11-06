@@ -4,10 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Site favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('home-assets/img/logo.png') ?>" />
-  <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('home-assets/img/logo.png') ?>" />
-  <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('home-assets/img/logo.png') ?>" />
+  
+  <link rel="icon" type="image/png" href="<?= base_url('home-assets/img/logo.png') ?>">
 
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -18,6 +16,10 @@
   <style>
   body {
     font-family: "Poppins", sans-serif !important;
+  }
+
+  #print_section {
+    display: none;
   }
 
   table {
@@ -61,6 +63,10 @@
   }
 
   @media print {
+    #print_section {
+      display: block;
+    }
+
     #print_page {
       display: none;
     }
@@ -89,7 +95,7 @@
 </head>
 
 <body>
-  <div class="container-fluid my-5">
+  <div class="container-fluid my-5" id="print_section">
     <div class="row mb-4 d-flex flex-column align-items-center justify-content-center" id="header_logo">
       <img style="width: 150px;" class="mb-2" src="<?= base_url('home-assets/img/logo.png') ?>" alt="">
       <p class="h3 text-center fw-bold">BACOOR NATIONAL HIGH SCHOOL - MAIN</p>
@@ -126,8 +132,8 @@
       <?php if(count($schedules) > 0) { ?>
       <?php foreach($schedules as $row) { ?>
       <?php $schedule[date('h:i A', strtotime($row['start_time'])) . ' - ' . date('h:i A',
-      strtotime($row['end_time']))][$row['day_id']] = ucwords($row['subject']) . '<br>' . ucwords($row['f_name'] . ' ' .
-      $row['l_name']); ?>
+      strtotime($row['end_time']))][$row['day_id']] = '<b>' . ucwords($row['subject']) . '</b>' . '<br><span style="font-size: 13px;">' . ucwords($row['f_name'] . ' ' .
+      $row['l_name']) . '</span>' ?>
       <?php } ?>
 
       <?php foreach($schedule as $time => $days) {
@@ -150,7 +156,7 @@
       </tr>
       <?php } ?>
     </table>
-    <div class="row" id="printed_info">
+    <div class="row mt-5" id="printed_info">
       <p class="fw-bold">Printed By: <span style="font-weight: 500; padding-left: 10px"><?= getUser()->name; ?></span>
       </p>
     </div>

@@ -80,4 +80,9 @@ class Room extends Model
             return false;
         }
     }
+
+    public function roomCount()
+    {
+        return $this->where('is_deleted', 'no')->countAllResults();
+    }
 }

@@ -241,6 +241,7 @@
               <th>Grade</th>
               <th>Section</th>
               <th>Time</th>
+              <th>Day ID</th>
               <th>Day</th>
               <th>Subject</th>
               <th>Teacher</th>
@@ -383,13 +384,16 @@ $(document).ready(function() {
       }
     },
     order: [
-      [3, 'desc']
+      [3, 'desc'],
+      [4, 'asc'],
     ],
     lengthMenu: [
       [5, 10, 25, 50, -1],
       [5, 10, 25, 50, "All"]
     ]
   }).columns.adjust();
+
+  dataTable.column(4).visible(false);
 
   setInterval(() => dataTable.ajax.reload(null, false), 10000);
 
@@ -718,7 +722,7 @@ $(document).ready(function() {
     e.preventDefault();
     const section = $('#filter_section').val();
     const url = '<?= route_to('admin.classroom-schedule-print', '') ?>' + section;
-    window.location.href = url;
+    window.open(url, '_blank');
   })
 
   // hide modal reset 

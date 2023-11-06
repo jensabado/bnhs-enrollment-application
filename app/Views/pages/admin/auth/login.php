@@ -29,7 +29,7 @@
   <form id="login_form">
     <div class="p-0 d-none" id="alert_div"></div>
     <div class="input-group custom">
-      <input type="text" class="form-control form-control-lg" placeholder="Username" id="email" name="email" />
+      <input type="text" class="form-control form-control-lg" placeholder="Email" id="email" name="email" value="<?= (isset($_COOKIE['bnhsAdminEmail'])) ? $_COOKIE['bnhsAdminEmail'] : '' ?>" />
       <div class="input-group-append custom">
         <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
       </div>
@@ -38,7 +38,7 @@
     <div class="input-group custom">
       <div class="password-container">
         <input type="password" class="form-control form-control-lg" placeholder="**********" id="password"
-          name="password" />
+          name="password" value="<?= (isset($_COOKIE['bnhsAdminPass'])) ? $_COOKIE['bnhsAdminPass'] : '' ?>" />
         <i class="bi bi-eye"></i>
       </div>
       <div class="input-group-append custom">
@@ -49,8 +49,8 @@
     <div class="row pb-30">
       <div class="col-6">
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="customCheck1" />
-          <label class="custom-control-label" for="customCheck1">Remember</label>
+          <input type="checkbox" class="custom-control-input" id="remember" name="remember" <?= (isset($_COOKIE['bnhsAdminEmail'])) ? 'checked' : '' ?> />
+          <label class="custom-control-label" for="remember">Remember</label>
         </div>
       </div>
       <div class="col-6">

@@ -98,4 +98,11 @@ class Teacher extends Model
             ->where('tbl_teacher_subject.subject_id', $subject)
             ->findAll();
     }
+
+    public function teacherCount()
+    {
+        return $this->where('is_deleted', 'no')
+            ->where('status', 'enable')
+            ->countAllResults();
+    }
 }
