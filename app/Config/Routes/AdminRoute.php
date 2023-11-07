@@ -69,6 +69,11 @@ $routes->group('admin', function($routes) {
     $routes->post('get-subject-option', 'ClassroomScheduleController::getSubjectOption', ['as' => 'admin.get-subject-option']);
     $routes->post('get-teacher-option', 'ClassroomScheduleController::getTeacherOption', ['as' => 'admin.get-teacher-option']);
     $routes->get('classroom-schedule-print/(:any)', 'ClassroomScheduleController::getPrint/$1', ['as' => 'admin.classroom-schedule-print']);
+    // GRADE 7 ENROLLEES
+    $routes->get('enrollees/grade-7', 'EnrolleesController::index', ['as' => 'admin.enrollees/grade-7']);
+    $routes->post('enrollees/grade-7-data', 'EnrolleesController::grade7Datatable', ['as' => 'admin.enrollees/grade-7-data']);
+    $routes->get('enrollees/grade-7/view/(:any)', 'EnrolleesController::grade7View/$1', ['as' => 'admin.enrollees/grade-7/view']);
+    $routes->post('update-enrollees-status', 'EnrolleesController::updateStatus', ['as' => 'admin.update-enrollees-status']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

@@ -334,7 +334,7 @@
             <div class="sidebar-small-cap">PENDING ENROLLEES</div>
           </li>
           <li>
-            <a href="<?= route_to('admin.classroom-schedule') ?>" class="dropdown-toggle no-arrow">
+            <a href="<?= route_to('admin.enrollees/grade-7') ?>" class="dropdown-toggle no-arrow">
               <span class="micon bi bi-person"></span><span class="mtext">Grade 7</span>
             </a>
           </li>
