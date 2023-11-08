@@ -40,7 +40,7 @@
               aria-selected="false">Requirements</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" data-toggle="tab" href="#status" role="tab"
+            <a class="nav-link font-weight-bold" data-toggle="tab" href="#status_tab" role="tab"
               aria-selected="false">Status</a>
           </li>
         </ul>
@@ -242,7 +242,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="status" role="tabpanel">
+          <div class="tab-pane fade" id="status_tab" role="tabpanel">
             <form action="" id="status_form">
               <div class="row mt-4">
                 <?= csrf_field(); ?>
@@ -257,6 +257,22 @@
                       <option value="8">CANCEL</option>
                     </select>
                     <span class="text-danger error" style="font-size: 13px;" id="status_error"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 d-none" id="section_cont">
+                  <div class="form-group">
+                    <label for="">Section</label>
+                    <select name="section" id="section" class="form-control" style="width: 100%;">
+
+                    </select>
+                    <span class="text-danger error" style="font-size: 13px;" id="section_error"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 d-none" id="status_password_cont">
+                  <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" name="status_password" id="status_password" class="form-control">
+                    <span class="text-danger error" style="font-size: 13px;" id="status_password_error"></span>
                   </div>
                 </div>
                 <div class="col-12">
@@ -274,17 +290,62 @@
 
 <?= $this->section('script') ?>
 <script>
+// Dynamic dependent dropdown action
+function populateSectionDropdown(targetDropdown) {
+  const form = new FormData();
+  form.append('id', '<?= $studentData->grade_level_id ?>');
+  $.ajax({
+    type: 'POST',
+    url: '<?= route_to("admin.get-section-option") ?>',
+    data: form,
+    contentType: false,
+    processData: false,
+    cache: false,
+    success: function(response) {
+      console.log(response);
+      targetDropdown.empty().prop('disabled', false).append(
+        '<option value="" selected disabled>SELECT SECTION</option>');
+      if (response.status === 'success') {
+        for (const [id, value] of Object.entries(response.message)) {
+          targetDropdown.append(`<option value="${value.id}">${value.section}</option>`);
+        }
+      } else if (response.status === 'error') {
+        targetDropdown.append(`<option value="">${response.message}</option>`);
+      }
+    }
+  });
+}
+
 $(document).ready(function() {
   $('#status, #gender').select2({
     minimumResultsForSearch: -1
   });
+
+  $('#section').select2();
+
+  // status onchange
+  $('#status').on('change', function(e) {
+    e.preventDefault();
+
+    let status = $(this).val();
+
+    if (status == 1) {
+      $('#status_password_cont').removeClass('d-none');
+      $('#section_cont').removeClass('d-none');
+      populateSectionDropdown($('#section'))
+    } else if (status == 8) {
+      $('#status_password_cont').addClass('d-none');
+      $('#section_cont').addClass('d-none');
+    }
+  })
 
   // update status
   $('#status_form').on('submit', function(e) {
     e.preventDefault();
 
     const form = new FormData(this);
-    
+    form.append('id', '<?= $studentData->id ?>');
+
     $.ajax({
       type: "POST",
       url: "<?=route_to('admin.update-enrollees-status')?>",
@@ -305,7 +366,9 @@ $(document).ready(function() {
       success: function(response) {
         $('input[name="<?= csrf_token() ?>"]').val(response.csrfHash);
         if (response.status === 'success') {
-          
+          localStorage.setItem('status', 'success');
+          localStorage.setItem('message', response.message);
+          window.location.href = '<?= route_to('admin.enrollees/grade-7') ?>'
         } else if (response.status === 'error') {
           for (const [field, errorMessage] of Object.entries(response.message)) {
             $(`#${field}_error`).text(`${errorMessage}`);

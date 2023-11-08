@@ -2,18 +2,26 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Hash;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\Requirements;
+use App\Models\ClassAdvisory;
+use App\Models\StudentSection;
 use App\Controllers\BaseController;
 
 class EnrolleesController extends BaseController
 {
-    protected $studentModel, $requirementsModel;
+    protected $studentModel, $requirementsModel, $sectionModel, $classAdvisoryModel, $studentSectionModel;
+    protected $helpers = ['CIMail'];
 
     public function __construct()
     {
         $this->studentModel = new Student();
         $this->requirementsModel = new Requirements();
+        $this->sectionModel = new Section();
+        $this->classAdvisoryModel = new ClassAdvisory();
+        $this->studentSectionModel = new StudentSection();
     }
 
     public function index()
@@ -38,13 +46,13 @@ class EnrolleesController extends BaseController
         if ($request->getPost('search')['value']) {
             $query .= '
                 AND (lrn LIKE "%' . $request->getPost('search')['value'] . '%"
-                OR firstname LIKE "%' . $request->getPost('search')['value'] . '%" 
-                OR middle_initial LIKE "%' . $request->getPost('search')['value'] . '%" 
-                OR lastname LIKE "%' . $request->getPost('search')['value'] . '%" 
-                OR gender LIKE "%' . $request->getPost('search')['value'] . '%" 
-                OR contact_no LIKE "%' . $request->getPost('search')['value'] . '%" 
-                OR email LIKE "%' . $request->getPost('search')['value'] . '%" 
-                OR parent_contact_no LIKE "%' . $request->getPost('search')['value'] . '%" 
+                OR firstname LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR middle_initial LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR lastname LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR gender LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR contact_no LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR email LIKE "%' . $request->getPost('search')['value'] . '%"
+                OR parent_contact_no LIKE "%' . $request->getPost('search')['value'] . '%"
                 OR created_at LIKE "%' . $request->getPost('search')['value'] . '%" )
                 ';
         }
@@ -75,19 +83,19 @@ class EnrolleesController extends BaseController
         foreach ($result as $row) {
             $sub_array = [];
             $name = '';
-            if(!empty($row['middle_initial'])) {
+            if (!empty($row['middle_initial'])) {
                 $name = ucwords($row['firstname'] . ' ' . $row['middle_initial'] . '. ' . $row['lastname']);
             } else {
                 $name = ucwords($row['firstname'] . ' ' . $row['lastname']);
             }
 
             $sub_array[] = $count++;
-            $sub_array[] =  $row['lrn'] ? $row['lrn'] : '';
+            $sub_array[] = $row['lrn'] ? $row['lrn'] : '';
             $sub_array[] = $name;
             $sub_array[] = strtoupper($row['gender']);
             $sub_array[] = $row['contact_no'];
             $sub_array[] = $row['email'];
-            $sub_array[] = $row['guardian'] . '<br>' . '<a href="tel:0'.$row['parent_contact_no'].'">0'.$row['parent_contact_no'].'</a>';
+            $sub_array[] = $row['guardian'] . '<br>' . '<a href="tel:0' . $row['parent_contact_no'] . '">0' . $row['parent_contact_no'] . '</a>';
             $sub_array[] = $row['created_at'];
             $sub_array[] = '<div class="btn-group">
                                 <button class="btn btn-primary btn-sm get_edit" data-id="' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
@@ -113,10 +121,10 @@ class EnrolleesController extends BaseController
         return $statement->getNumRows();
     }
 
-    public function grade7View($id) 
+    public function grade7View($id)
     {
-        
-        if(!$this->studentModel->enrolleeExist(1, $id)) {
+
+        if (!$this->studentModel->enrolleeExist(1, $id)) {
             return redirect()->route('admin.enrollees/grade-7');
         } else {
             $data = [
@@ -124,7 +132,7 @@ class EnrolleesController extends BaseController
                 'studentData' => $this->studentModel->getStudentById($id),
                 'studentRequirements' => $this->requirementsModel->getRequirementsByStudentId($id),
             ];
-    
+
             return view('pages/admin/enrollees/grade-7/view', $data);
         }
     }
@@ -137,17 +145,88 @@ class EnrolleesController extends BaseController
             'status' => 'required',
         ], [
             'status' => [
-                'required' => 'Select Status first.'
-            ]
+                'required' => 'Select Status first.',
+            ],
         ]);
 
-        if(!$validator->withRequest($this->request)->run()) {
+        if (!$validator->withRequest($this->request)->run()) {
             $response = ['status' => 'error', 'message' => $validator->getErrors()];
         } else {
             $status = $this->request->getPost('status');
+            $id = $this->request->getPost('id');
 
-            if($status == '1') {
+            if ($status == '1') {
+                $validator = \Config\Services::validation();
 
+                $validator->setRules([
+                    'section' => 'required',
+                    'status_password' => 'required',
+                ], [
+                    'section' => [
+                        'required' => 'Select Section first.',
+                    ],
+                    'status_password' => [
+                        'required' => 'Password is required',
+                    ],
+                ]);
+
+                if (!$validator->withRequest($this->request)->run()) {
+                    $response = ['status' => 'error', 'message' => $validator->getErrors()];
+                } else {
+                    $section = $this->request->getPost('section');
+                    $status_password = $this->request->getPost('status_password');
+                    $studentData = (array)$this->studentModel->getStudentById($id);
+                    $studentData['password_plain'] = $status_password;
+                    $sectionData = (array)$this->sectionModel->getDataById($section);
+                    $adviserData = (array)$this->classAdvisoryModel->getTeachersBySection($section);
+
+                    $mailData = array(
+                        'studentData' => $studentData,
+                        'sectionData' => $sectionData,
+                        'adviserData' => $adviserData,
+                    );
+
+                    $view = \Config\Services::renderer();
+                    $mailBody = $view->setVar('mailData', $mailData)->render('email-templates/enrolled-email');
+
+                    $mailConfig = array(
+                        'mailFromEmail' => 'nextgen.techiq@gmail.com',
+                        'mailFromName' => 'BACOOR NATIONAL HIGH SCHOOL',
+                        'mailRecipientEmail' => $studentData['email'],
+                        'mailRecipientName' => empty($studentData['middle_initial']) ? $studentData['lastname'] . ', ' . $studentData['firstname'] : $studentData['lastname'] . ', ' . $studentData['firstname'] . ' ' . $studentData['middle_initial'] . '.',
+                        'mailSubject' => 'Welcome to Bacoor National High School',
+                        'mailBody' => $mailBody,
+                    );
+
+                    if (sendMail($mailConfig)) {
+                        $year = date('y');
+                        $last_number = 000000 + (int) $id;
+                        $result = str_pad($last_number, 6, '0', STR_PAD_LEFT);
+                        $lrn = $year . '' . $result;
+
+                        $data = [
+                            'status' => $status,
+                            'password' => Hash::make($status_password),
+                            'lrn' => $lrn,
+                        ];
+
+                        $updateStudent = $this->studentModel->updateData($id, $data);
+
+                        if($updateStudent) {
+                            $insertStudentSectionData = [
+                                'student_id' => $studentData['id'],
+                                'grade_level_id' => $studentData['grade_level_id'],
+                                'section_id' => $section
+                            ];
+
+                            $insertStudentSection = $this->studentSectionModel->insertData($insertStudentSectionData);
+
+                            if($insertStudentSection) {
+                                $response = ['status' => 'success', 'message' => 'Updated successfully'];
+                            }
+                        }
+                    }
+                }
             }
         }
 

@@ -6,10 +6,10 @@ use CodeIgniter\Model;
 
 class ClassAdvisory extends Model
 {
-    protected $DBGroup          = 'default';
-    protected $table            = 'tbl_classroom_advisory';
-    protected $primaryKey       = 'id';
-    protected $allowedFields    = ['id', 'grade_level_id', 'section_id', 'teacher_id', 'is_deleted', 'created_at'];
+    protected $DBGroup = 'default';
+    protected $table = 'tbl_classroom_advisory';
+    protected $primaryKey = 'id';
+    protected $allowedFields = ['id', 'grade_level_id', 'section_id', 'teacher_id', 'is_deleted', 'created_at'];
 
     public function classAdvisoryExists($grade, $section, $id)
     {
@@ -61,5 +61,21 @@ class ClassAdvisory extends Model
         } else {
             return false;
         }
+    }
+
+    public function getClassAdvisoryBySection($section)
+    {
+        return $this->asObject()->where('section_id', $section)
+            ->where('is_deleted', 'no')
+            ->findAll();
+    }
+
+    public function getTeachersBySection($section)
+    {
+        return $this->asObject()->select('tbl_teacher.*')
+            ->join('tbl_teacher', 'tbl_classroom_advisory.teacher_id = tbl_teacher.id', 'left')
+            ->where('tbl_classroom_advisory.section_id', $section)
+            ->where('tbl_classroom_advisory.is_deleted', 'no')
+            ->first();
     }
 }

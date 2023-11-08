@@ -34,4 +34,17 @@ class Student extends Model
             ->where('tbl_student.is_deleted', 'no')
             ->first();
     }
+
+    public function updateData($id, $data)
+    {
+        $builder = $this->db->table($this->table);
+        $builder->where('id', $id);
+        $builder->set($data);
+
+        if ($builder->update()) {
+            return true; // Update successful
+        } else {
+            return false; // Update failed
+        }
+    }
 }

@@ -48,6 +48,26 @@
 
 <?=$this->section('script')?>
 <script>
+$(window).on('load', function() {
+  if (localStorage.getItem('status') == 'success') {
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: localStorage.getItem('message'),
+      iconColor: '#274c43',
+      confirmButtonColor: '#274c43',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      color: '#000',
+      background: '#fff',
+    })
+
+    localStorage.removeItem('status');
+    localStorage.removeItem('message');
+  }
+})
+
 $(document).ready(function() {
   var dataTable = $('#table').DataTable();
 
