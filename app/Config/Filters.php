@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Filters\AdminFilter;
+use App\Filters\StudentFilter;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -26,6 +27,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'admin' => AdminFilter::class,
+        'student' => StudentFilter::class,
     ];
 
     /**

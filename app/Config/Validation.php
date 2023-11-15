@@ -5,6 +5,7 @@ namespace Config;
 use App\Validation\AvatarIfUploadedRule;
 use App\Validation\AvatarSizeRule;
 use App\Validation\isContactNum;
+use App\Validation\ValidateMediafireURL;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Validation\StrictRules\CreditCardRules;
 use CodeIgniter\Validation\StrictRules\FileRules;
@@ -31,6 +32,7 @@ class Validation extends BaseConfig
         isContactNum::class,
         AvatarSizeRule::class,
         AvatarIfUploadedRule::class,
+        ValidateMediafireURL::class,
     ];
 
     /**

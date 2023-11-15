@@ -35,6 +35,15 @@ class Student extends Model
             ->first();
     }
 
+    public function getStudentByEmail($email)
+    {
+        return $this->asObject()->select('tbl_student.*, tbl_grade_level.grade')
+            ->join('tbl_grade_level', 'tbl_student.grade_level_id = tbl_grade_level.id', 'left')
+            ->where('tbl_student.email', $email)
+            ->where('tbl_student.is_deleted', 'no')
+            ->first();
+    }
+
     public function updateData($id, $data)
     {
         $builder = $this->db->table($this->table);
@@ -46,5 +55,24 @@ class Student extends Model
         } else {
             return false; // Update failed
         }
+    }
+
+    public function insertData($data)
+    {
+        $result = $this->db->table($this->table)->insert($data);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function emailExist($email)
+    {
+        return $this->table($this->table)
+            ->where('email', $email)
+            ->where('is_deleted', 'no')
+            ->countAllResults() > 0 ? true : false;
     }
 }

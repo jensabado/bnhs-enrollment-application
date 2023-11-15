@@ -72,7 +72,8 @@
     <div class="container d-flex align-content-center flex-wrap">
       <div class="row d-flex align-content-center flex-wrap">
         <div class="col-lg-3 text-center">
-          <a href="index.php"><img src="<?= base_url('home-assets/img/logo.png') ?>" alt="" class="img-logo" width="220px"></a>
+          <a href="index.php"><img src="<?= base_url('home-assets/img/logo.png') ?>" alt="" class="img-logo"
+              width="220px"></a>
         </div>
         <div class="col-lg-9 text-right">
           <h1 style="color: #fff !important;" class="mt-2 font-weight-bold">Bacoor National High School</h1>
@@ -365,6 +366,26 @@
 
   <!-- Template Main JS File -->
   <script src="<?= base_url('home-assets/js/main.js') ?>"></script>
+
+  <script>
+  $(window).on('load', function() {
+    if (localStorage.getItem('success')) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: localStorage.getItem('success'),
+        iconColor: '#274c43',
+        confirmButtonColor: '#274c43',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        color: '#000',
+        background: '#fff',
+      })
+      localStorage.removeItem('success');
+    }
+  })
+  </script>
 
   <?= $this->renderSection('script') ?>
 </body>

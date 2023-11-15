@@ -183,25 +183,26 @@
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">Video Record</label>
-                  <a href="<?= base_url('requirements/video-record/' . $studentRequirements->video_record) ?>"
-                    target="_blank" style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->video_record ?></a>
+                  <a href="<?= !empty($studentRequirements->video_record) ? $studentRequirements->video_record : 'javascript:void(0)' ?>"
+                    <?= !empty($studentRequirements->video_record) ? 'target="_blank"' : '' ?>
+                    style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->video_record) ? $studentRequirements->video_record : 'N/A' ?></a>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">PDF File</label>
-                  <a href="<?= base_url('requirements/pdf-file/' . $studentRequirements->pdf_file) ?>" target="_blank"
-                    style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->pdf_file ?></a>
+                  <a href="<?= !empty($studentRequirements->pdf_file) ? base_url('requirements/pdf-file/' . $studentRequirements->pdf_file) : '#' ?>"
+                    <?= !empty($studentRequirements->pdf_file) ? 'target="_blank"' : '' ?> style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->pdf_file) ? $studentRequirements->pdf_file : 'N/A' ?></a>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">Form 138</label>
-                  <a href="<?= base_url('requirements/form-138/' . $studentRequirements->form_138) ?>" target="_blank"
-                    style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->form_138 ?></a>
+                  <a href="<?= !empty($studentRequirements->form_138) ? base_url('requirements/form-138/' . $studentRequirements->form_138) : '#' ?>"
+                    <?= !empty($studentRequirements->form_138) ? 'target="_blank"' : '' ?> style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->form_138) ? $studentRequirements->form_138 : 'N/A' ?></a>
                 </div>
               </div>
             </div>
@@ -209,25 +210,27 @@
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">PSA Birth Cert</label>
-                  <a href="<?= base_url('requirements/psa-birth-cert/' . $studentRequirements->psa_birth_cert) ?>"
-                    target="_blank" style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->psa_birth_cert ?></a>
+                  <a href="<?= !empty($studentRequirements->psa_birth_cert) ? base_url('requirements/psa-birth-cert/' . $studentRequirements->psa_birth_cert) : '#' ?>"
+                    <?= !empty($studentRequirements->psa_birth_cert) ? 'target="_blank"' : '' ?>
+                    style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->psa_birth_cert) ? $studentRequirements->psa_birth_cert : 'N/A' ?></a>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">Barangay Clearance</label>
-                  <a href="<?= base_url('requirements/brgy-clearance/' . $studentRequirements->brgy_clearance) ?>"
-                    target="_blank" style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->brgy_clearance ?></a>
+                  <a href="<?= !empty($studentRequirements->brgy_clearance) ? base_url('requirements/brgy-clearance/' . $studentRequirements->brgy_clearance) : '#' ?>"
+                    <?= !empty($studentRequirements->brgy_clearance) ? 'target="_blank"' : '' ?>
+                    style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->brgy_clearance) ? $studentRequirements->brgy_clearance : 'N/A' ?></a>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">Good Moral</label>
-                  <a href="<?= base_url('requirements/good-moral/' . $studentRequirements->good_moral) ?>"
-                    target="_blank" style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->good_moral ?></a>
+                  <a href="<?= !empty($studentRequirements->good_moral) ? base_url('requirements/good-moral/' . $studentRequirements->good_moral) : '#' ?>"
+                    <?= !empty($studentRequirements->good_moral) ? 'target="_blank"' : '' ?> style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->good_moral) ? $studentRequirements->good_moral : 'N/A' ?></a>
                 </div>
               </div>
             </div>
@@ -235,9 +238,10 @@
               <div class="col-md-4">
                 <div class="form-group d-flex flex-column">
                   <label for="">ID of Guardian</label>
-                  <a href="<?= base_url('requirements/guardian-id/' . $studentRequirements->guardian_id) ?>"
-                    target="_blank" style="text-decoration: underline;"
-                    class="font-weight-bold"><?= $studentRequirements->guardian_id ?></a>
+                  <a href="<?= !empty($studentRequirements->guardian_id) ? base_url('requirements/guardian-id/' . $studentRequirements->guardian_id) : '#' ?>"
+                    <?= !empty($studentRequirements->guardian_id) ? 'target="_blank"' : '' ?>
+                    style="text-decoration: underline; overflow-wrap: break-word;"
+                    class="font-weight-bold"><?= !empty($studentRequirements->guardian_id) ? $studentRequirements->guardian_id : 'N/A' ?></a>
                 </div>
               </div>
             </div>
@@ -254,7 +258,7 @@
                       <?php if($studentData->status == 0) { ?>
                       <option value="1">APPROVED</option>
                       <?php } ?>
-                      <option value="8">CANCEL</option>
+                      <option value="11">DECLINE</option>
                     </select>
                     <span class="text-danger error" style="font-size: 13px;" id="status_error"></span>
                   </div>
@@ -275,6 +279,18 @@
                     <span class="text-danger error" style="font-size: 13px;" id="status_password_error"></span>
                   </div>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 d-none" id="reason_cont">
+                  <div class="form-group">
+                    <label for="">Reason</label>
+                    <textarea name="reason" id="reason" cols="30" rows="4" class="form-control"
+                      style="height: 70px; resize: none;"></textarea>
+                    <span class="text-danger error" style="font-size: 13px;" id="reason_error"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary" id="status_submit_btn">Update Status</button>
                 </div>
@@ -332,10 +348,12 @@ $(document).ready(function() {
     if (status == 1) {
       $('#status_password_cont').removeClass('d-none');
       $('#section_cont').removeClass('d-none');
+      $('#reason_cont').addClass('d-none');
       populateSectionDropdown($('#section'))
-    } else if (status == 8) {
+    } else if (status == 11) {
       $('#status_password_cont').addClass('d-none');
       $('#section_cont').addClass('d-none');
+      $('#reason_cont').removeClass('d-none');
     }
   })
 

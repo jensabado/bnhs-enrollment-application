@@ -163,10 +163,10 @@
           <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
             <span class="user-icon" style="width: 40px; height: 40px;">
               <img
-                src="<?= !empty(getUser()->photo) ? base_url('/admin-assets/vendors/images/avatar/' . getUser()->photo) : base_url('avatar/no-image/avatar-1.png') ?>"
+                src="<?= !empty(getAdmin()->photo) ? base_url('/admin-assets/vendors/images/avatar/' . getAdmin()->photo) : base_url('avatar/no-image/avatar-1.png') ?>"
                 alt="" />
             </span>
-            <span class="user-name"><?= getUser()->name; ?></span>
+            <span class="user-name"><?= getAdmin()->name; ?></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
             <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
@@ -336,6 +336,14 @@
           <li>
             <a href="<?= route_to('admin.enrollees/grade-7') ?>" class="dropdown-toggle no-arrow">
               <span class="micon bi bi-person"></span><span class="mtext">Grade 7</span>
+            </a>
+          </li>
+          <li>
+            <div class="sidebar-small-cap">ENROLLED</div>
+          </li>
+          <li>
+            <a href="<?= route_to('admin.enrollees/grade-7') ?>" class="dropdown-toggle no-arrow">
+              <span class="micon bi bi-person-check"></span><span class="mtext">Grade 7</span>
             </a>
           </li>
           <!-- <li>

@@ -17,4 +17,15 @@ class Requirements extends Model
         ->where('is_deleted', 'no')
         ->first();
     }
+
+    public function insertData($data)
+    {
+        $result = $this->db->table($this->table)->insert($data);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

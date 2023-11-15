@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Libraries\Hash;
+use App\Models\ClassAdvisory;
+use App\Models\Requirements;
 use App\Models\Section;
 use App\Models\Student;
-use App\Models\Requirements;
-use App\Models\ClassAdvisory;
 use App\Models\StudentSection;
-use App\Controllers\BaseController;
 
 class EnrolleesController extends BaseController
 {
@@ -175,10 +175,10 @@ class EnrolleesController extends BaseController
                 } else {
                     $section = $this->request->getPost('section');
                     $status_password = $this->request->getPost('status_password');
-                    $studentData = (array)$this->studentModel->getStudentById($id);
+                    $studentData = (array) $this->studentModel->getStudentById($id);
                     $studentData['password_plain'] = $status_password;
-                    $sectionData = (array)$this->sectionModel->getDataById($section);
-                    $adviserData = (array)$this->classAdvisoryModel->getTeachersBySection($section);
+                    $sectionData = (array) $this->sectionModel->getDataById($section);
+                    $adviserData = (array) $this->classAdvisoryModel->getTeachersBySection($section);
 
                     $mailData = array(
                         'studentData' => $studentData,
@@ -212,18 +212,65 @@ class EnrolleesController extends BaseController
 
                         $updateStudent = $this->studentModel->updateData($id, $data);
 
-                        if($updateStudent) {
+                        if ($updateStudent) {
                             $insertStudentSectionData = [
                                 'student_id' => $studentData['id'],
                                 'grade_level_id' => $studentData['grade_level_id'],
-                                'section_id' => $section
+                                'section_id' => $section,
                             ];
 
                             $insertStudentSection = $this->studentSectionModel->insertData($insertStudentSectionData);
 
-                            if($insertStudentSection) {
+                            if ($insertStudentSection) {
                                 $response = ['status' => 'success', 'message' => 'Updated successfully'];
                             }
+                        }
+                    }
+                }
+            } else if ($status == 11) {
+                $validator = \Config\Services::validation();
+
+                $validator->setRules([
+                    'reason' => 'required',
+                ], [
+                    'reason' => [
+                        'required' => 'Reason is required.',
+                    ],
+                ]);
+
+                if (!$validator->withRequest($this->request)->run()) {
+                    $response = ['status' => 'error', 'message' => $validator->getErrors()];
+                } else {
+                    $reason = $this->request->getPost('reason');
+
+                    $studentData = (array) $this->studentModel->getStudentById($id);
+
+                    $mailData = array(
+                        'studentData' => $studentData,
+                        'reason' => $reason,
+                    );
+
+                    $view = \Config\Services::renderer();
+                    $mailBody = $view->setVar('mailData', $mailData)->render('email-templates/decline-email');
+
+                    $mailConfig = array(
+                        'mailFromEmail' => 'nextgen.techiq@gmail.com',
+                        'mailFromName' => 'BACOOR NATIONAL HIGH SCHOOL',
+                        'mailRecipientEmail' => $studentData['email'],
+                        'mailRecipientName' => empty($studentData['middle_initial']) ? $studentData['lastname'] . ', ' . $studentData['firstname'] : $studentData['lastname'] . ', ' . $studentData['firstname'] . ' ' . $studentData['middle_initial'] . '.',
+                        'mailSubject' => 'Enrollment Application Declined - Bacoor National High School',
+                        'mailBody' => $mailBody,
+                    );
+
+                    if (sendMail($mailConfig)) {
+                        $data = [
+                            'status' => $status,
+                        ];
+
+                        $updateStudent = $this->studentModel->updateData($id, $data);
+
+                        if ($updateStudent) {
+                            $response = ['status' => 'success', 'message' => 'Updated successfully'];
                         }
                     }
                 }

@@ -70,7 +70,8 @@
 
     <!-- ======= Registration Section ======= -->
     <section style="margin-top: 24px !important;" id="registration" class="registration section-bg">
-      <div class="w-100 p-3 text-center" style="background-image: url('<?= base_url('home-assets/img/gallery/b4.png') ?>'); color: #ffff;">
+      <div class="w-100 p-3 text-center"
+        style="background-image: url('<?= base_url('home-assets/img/gallery/b4.png') ?>'); color: #ffff;">
         <h3 style="font-weight: bold;">Registration Form</h3>
       </div>
       <div class="container  pt-5">
@@ -110,10 +111,9 @@
                                   <label class="col-md-3 col-form-label">First
                                     Name</label>
                                   <div class="col-md-9">
-                                    <input type="text" class="form-control" id="add_firstname" name="add_firstname"
-                                      placeholder="Ex: John" />
-
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_firstname_error"
+                                    <input type="text" class="form-control form_field" id="add_new_firstname"
+                                      name="add_new_firstname" placeholder="Ex: John" />
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_firstname_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -123,18 +123,18 @@
                                   <label class="col-md-3 col-form-label">Last
                                     Name</label>
                                   <div class="col-md-6">
-                                    <input type="text" class="form-control" id="add_lastname" name="add_lastname"
-                                      placeholder="Ex: Smith" />
+                                    <input type="text" class="form-control form_field" id="add_new_lastname"
+                                      name="add_new_lastname" placeholder="Ex: Smith" />
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_lastname_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_lastname_error"
                                       class="text-danger errors"></span>
                                   </div>
                                   <label class="col-md-1 col-form-label">MI</label>
                                   <div class="col-md-2">
-                                    <input type="text" class="form-control" id="add_mi" name="add_mi"
+                                    <input type="text" class="form-control form_field" id="add_new_mi" name="add_new_mi"
                                       placeholder="Ex: M" />
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_mi_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_mi_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -145,7 +145,7 @@
                                 <div class="form-group row">
                                   <label class="col-md-3 col-form-label">Gender</label>
                                   <div class="col-md-9">
-                                    <select class="form-control" id="add_gender" name="add_gender">
+                                    <select class="form-control form_field" id="add_new_gender" name="add_new_gender">
                                       <option value="Male">Male</option>
                                       <option value="Female">Female</option>
                                     </select>
@@ -157,11 +157,11 @@
                                   <label class="col-md-3 col-form-label">Date of
                                     Birth</label>
                                   <div class="col-md-9">
-                                    <input class="form-control" id="add_bdate" type="date" name="add_bdate"
-                                      placeholder="dd/mm/yyyy" data-inputmask-alias="datetime"
+                                    <input class="form-control form_field" id="add_new_bdate" type="date"
+                                      name="add_new_bdate" placeholder="dd/mm/yyyy" data-inputmask-alias="datetime"
                                       data-inputmask-inputformat="dd/mm/yyyy" />
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_bdate_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_bdate_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -172,10 +172,11 @@
                                 <div class="form-group row">
                                   <label class="col-md-3 col-form-label">Address</label>
                                   <div class="col-md-9">
-                                    <textarea class="form-control" row="4" id="add_address" name="add_address"
+                                    <textarea class="form-control form_field" row="4" id="add_new_address"
+                                      name="add_new_address"
                                       placeholder="Ex: 123 Main Street Citytown, State 12345"></textarea>
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_address_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_address_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -185,10 +186,11 @@
                                   <label class="col-md-3 col-form-label">Place of
                                     Birth</label>
                                   <div class="col-md-9">
-                                    <textarea class="form-control" row="4" id="add_placebirth" name="add_placebirth"
+                                    <textarea class="form-control form_field" row="4" id="add_new_placebirth"
+                                      name="add_new_placebirth"
                                       placeholder="Ex: 123 Main Street Cityville, Stateville Countryland"></textarea>
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_placebirth_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_placebirth_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -199,10 +201,10 @@
                                 <div class="form-group row">
                                   <label class="col-md-3 col-form-label">Nationality</label>
                                   <div class="col-md-9">
-                                    <input class="form-control" type="text" id="add_nationality" name="add_nationality"
-                                      placeholder="Ex: Filipino" />
+                                    <input class="form-control form_field" type="text" id="add_new_nationality"
+                                      name="add_new_nationality" placeholder="Ex: Filipino" />
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_nationality_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_nationality_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -211,29 +213,30 @@
                                 <div class="form-group row">
                                   <label class="col-md-3 col-form-label">Religion</label>
                                   <div class="col-md-9">
-                                    <input class="form-control" type="text" id="add_religion" name="add_religion"
-                                      placeholder="Ex: Catholic" />
+                                    <input class="form-control form_field" type="text" id="add_new_religion"
+                                      name="add_new_religion" placeholder="Ex: Catholic" />
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_religion_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_religion_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-md-6">
+                              <!-- <div class="col-md-6">
                                 <div class="form-group row">
                                   <label class="col-md-3 col-form-label">Civil
                                     Status</label>
                                   <div class="col-md-9">
-                                    <select class="form-control" id="add_civil_status" name="add_civil_status">
+                                    <select class="form-control form_field" id="add_new_civil_status"
+                                      name="add_new_civil_status">
                                       <option value="Single">Single</option>
                                       <option value="Married">Married</option>
                                       <option value="Widow">Widow</option>
                                     </select>
                                   </div>
                                 </div>
-                              </div>
+                              </div> -->
                               <div class="row">
                                 <p class="fw-bold"><br>
                                   Contact Information
@@ -247,10 +250,10 @@
                                       <div class="input-group">
                                         <span style="height: 45px !important; font-size: 14px !important;"
                                           class="input-group-text">+63</span>
-                                        <input type="text" class="form-control" id="add_contact" name="add_contact"
-                                          placeholder="Ex: 9735628646">
+                                        <input type="text" class="form-control form_field" id="add_new_contact"
+                                          name="add_new_contact" placeholder="Ex: 9735628646">
                                       </div>
-                                      <span style="font-size: 13px; font-weight: 500;" id="add_contact_error"
+                                      <span style="font-size: 13px; font-weight: 500;" id="add_new_contact_error"
                                         class="text-danger errors"></span>
                                     </div>
                                   </div>
@@ -260,10 +263,10 @@
                                     <label class="col-md-3 col-form-label">Guardian's
                                       Name</label>
                                     <div class="col-md-9">
-                                      <input type="text" class="form-control" id="add_guardian" name="add_guardian"
-                                        placeholder="Ex: Sophia Smith" />
+                                      <input type="text" class="form-control form_field" id="add_new_guardian"
+                                        name="add_new_guardian" placeholder="Ex: Sophia Smith" />
 
-                                      <span style="font-size: 13px; font-weight: 500;" id="add_guardian_error"
+                                      <span style="font-size: 13px; font-weight: 500;" id="add_new_guardian_error"
                                         class="text-danger errors"></span>
                                     </div>
                                   </div>
@@ -275,10 +278,10 @@
                                     <label class="col-md-3 col-form-label">Student
                                       Email</label>
                                     <div class="col-md-9">
-                                      <input type="text" class="form-control" id="add_email" name="add_email"
-                                        placeholder="Ex: example@gmail.com" />
+                                      <input type="text" class="form-control form_field" id="add_new_email"
+                                        name="add_new_email" placeholder="Ex: example@gmail.com" />
 
-                                      <span style="font-size: 13px; font-weight: 500;" id="add_email_error"
+                                      <span style="font-size: 13px; font-weight: 500;" id="add_new_email_error"
                                         class="text-danger errors"></span>
                                     </div>
                                   </div>
@@ -292,11 +295,11 @@
                                       <div class="input-group">
                                         <span style="height: 45px !important; font-size: 14px !important;"
                                           class="input-group-text">+63</span>
-                                        <input type="text" class="form-control" id="add_guardian_contact"
-                                          name="add_guardian_contact" placeholder="Ex: 9827592749">
+                                        <input type="text" class="form-control form_field" id="add_new_guardian_contact"
+                                          name="add_new_guardian_contact" placeholder="Ex: 9827592749">
                                       </div>
-                                      <span style="font-size: 13px; font-weight: 500;" id="add_guardian_contact_error"
-                                        class="text-danger errors"></span>
+                                      <span style="font-size: 13px; font-weight: 500;"
+                                        id="add_new_guardian_contact_error" class="text-danger errors"></span>
                                     </div>
                                   </div>
                                 </div>
@@ -309,7 +312,10 @@
                               <p style="font-size: 13px; font-weight: 500;">*Please
                                 carefully follow these steps: Record a video of yourself
                                 reading and answering to the question in the provided
-                                PDF. After recording, upload the video file. Ensure you
+                                PDF. After recording, upload the video file in Mediafire (<a
+                                  href="https://www.mediafire.com/" target="_blank"
+                                  style="text-decoration: underline;"><i>https://www.mediafire.com/</i></a>) copy link
+                                and paste in video record link field below. Ensure you
                                 also compile your answers into a single file and convert
                                 it to PDF format. Use the designated field below for
                                 both the video and the PDF submission. Your accurate
@@ -327,14 +333,12 @@
                               <div class="col-md-6">
                                 <div class="form-group row">
                                   <label class="col-md-3 col-form-label">Video
-                                    Record</label>
+                                    Record Link</label>
                                   <div class="col-md-9">
-                                    <div class="input-group custom-file-button">
-                                      <label style="font-size: 14px;" class="input-group-text">Choose
-                                        File</label>
-                                      <input type="file" class="form-control" id="add_video" name="add_video">
-                                    </div>
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_video_error"
+                                    <input type="text" class="form-control form_field" id="add_new_video"
+                                      name="add_new_video" placeholder="Insert MediaFire Link" />
+
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_video_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -347,10 +351,11 @@
                                     <div class="input-group custom-file-button">
                                       <label style="font-size: 14px;" class="input-group-text">Choose
                                         File</label>
-                                      <input type="file" class="form-control" id="add_pdf_file" name="add_pdf_file">
+                                      <input type="file" class="form-control form_field" id="add_new_pdf_file"
+                                        name="add_new_pdf_file">
                                     </div>
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_pdf_file_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_pdf_file_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -365,9 +370,10 @@
                                     <div class="input-group custom-file-button">
                                       <label style="font-size: 14px;" class="input-group-text">Choose
                                         File</label>
-                                      <input type="file" class="form-control" id="add_form_138" name="add_form_138">
+                                      <input type="file" class="form-control form_field" id="add_new_form_138"
+                                        name="add_new_form_138">
                                     </div>
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_form_138_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_form_138_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -380,10 +386,11 @@
                                     <div class="input-group custom-file-button">
                                       <label style="font-size: 14px;" class="input-group-text">Choose
                                         File</label>
-                                      <input type="file" class="form-control" id="add_psa" name="add_psa">
+                                      <input type="file" class="form-control form_field" id="add_new_psa"
+                                        name="add_new_psa">
                                     </div>
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_psa_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_psa_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -398,11 +405,11 @@
                                     <div class="input-group custom-file-button">
                                       <label style="font-size: 14px;" class="input-group-text">Choose
                                         File</label>
-                                      <input type="file" class="form-control" id="add_brgy_clearance"
-                                        name="add_brgy_clearance">
+                                      <input type="file" class="form-control form_field" id="add_new_brgy_clearance"
+                                        name="add_new_brgy_clearance">
                                     </div>
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_brgy_clearance_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_brgy_clearance_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -415,9 +422,10 @@
                                     <div class="input-group custom-file-button">
                                       <label style="font-size: 14px;" class="input-group-text">Choose
                                         File</label>
-                                      <input type="file" class="form-control" id="add_good_moral" name="add_good_moral">
+                                      <input type="file" class="form-control form_field" id="add_new_good_moral"
+                                        name="add_new_good_moral">
                                     </div>
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_good_moral_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_good_moral_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
@@ -432,40 +440,16 @@
                                     <div class="input-group custom-file-button">
                                       <label style="font-size: 14px;" class="input-group-text">Choose
                                         File</label>
-                                      <input type="file" class="form-control" id="add_guardian_id"
-                                        name="add_guardian_id">
+                                      <input type="file" class="form-control form_field" id="add_new_guardian_id"
+                                        name="add_new_guardian_id">
                                     </div>
 
-                                    <span style="font-size: 13px; font-weight: 500;" id="add_guardian_id_error"
+                                    <span style="font-size: 13px; font-weight: 500;" id="add_new_guardian_id_error"
                                       class="text-danger errors"></span>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <!-- <div class="row">
-                                                            <p class="fw-bold"><br>
-                                                                Account Information
-                                                            </p>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-
-                                                                    <label
-                                                                        class="col-md-3 col-form-label">Username</label>
-                                                                    <div class="col-md-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label
-                                                                        class="col-md-3 col-form-label">Password</label>
-                                                                    <div class="col-md-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
                             <div>
                               <hr>
                               <button type="submit" class="btn btn-submit" id="add_new_student_btn">
@@ -992,233 +976,36 @@
       e.preventDefault();
 
       let form = new FormData(this);
-      form.append('add_new_student', true);
 
       $.ajax({
         type: "POST",
-        url: "./controller/backend",
+        url: "<?= route_to('home.enroll-submit') ?>",
         data: form,
         processData: false,
         contentType: false,
         cache: false,
         beforeSend: function() {
           $('#add_new_student_btn').prop('disabled', true);
+          $(`.form_field`).removeClass('border-danger');
+          $(`.errors`).text(``);
         },
         complete: function() {
           $('#add_new_student_btn').prop('disabled', false);
         },
         success: function(response) {
           console.log(response);
-          $('#add_new_student_btn').prop('disabled', false);
-          let data = JSON.parse(response);
-          if (data.status === 'invalid') {
-            if (data.add_firstname != '') {
-              $('#add_firstname_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_firstname);
-              $("#add_firstname").addClass('border-danger');
-            } else {
-              $('#add_firstname_error').html('');
-              $("#add_firstname").removeClass('border-danger');
+          if (response.status == 'success') {
+            localStorage.setItem('success', response.message);
+            window.location.href = '<?= route_to('home') ?>'
+          } else if (response.status == 'error') {
+            for (const [field, errorMessage] of Object.entries(response.message)) {
+              $(`#${field}_error`).text(`${errorMessage}`);
+              $(`#${field}`).addClass('border-danger');
             }
-
-            if (data.add_lastname != '') {
-              $('#add_lastname_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_lastname);
-              $("#add_lastname").addClass("border-danger");
-            } else {
-              $('#add_lastname_error').html('');
-              $("#add_lastname").removeClass('border-danger');
-            }
-
-            if (data.add_bdate != '') {
-              $('#add_bdate_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_bdate);
-              $("#add_bdate").addClass("border-danger");
-            } else {
-              $('#add_bdate_error').html('');
-              $("#add_bdate").removeClass('border-danger');
-            }
-
-            if (data.add_address != '') {
-              $('#add_address_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_address);
-              $("#add_address").addClass("border-danger");
-            } else {
-              $('#add_address_error').html('');
-              $("#add_address").removeClass('border-danger');
-            }
-
-            if (data.add_placebirth != '') {
-              $('#add_placebirth_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_placebirth);
-              $("#add_placebirth").addClass("border-danger");
-            } else {
-              $('#add_placebirth_error').html('');
-              $("#add_placebirth").removeClass('border-danger');
-            }
-
-            if (data.add_nationality != '') {
-              $('#add_nationality_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_nationality);
-              $("#add_nationality").addClass("border-danger");
-            } else {
-              $('#add_nationality_error').html('');
-              $("#add_nationality").removeClass('border-danger');
-            }
-
-            if (data.add_religion != '') {
-              $('#add_religion_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_religion);
-              $("#add_religion").addClass("border-danger");
-            } else {
-              $('#add_religion_error').html('');
-              $("#add_religion").removeClass('border-danger');
-            }
-
-            if (data.add_civil_status != '') {
-              $('#add_civil_status_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_civil_status);
-              $("#add_civil_status").addClass("border-danger");
-            } else {
-              $('#add_civil_status_error').html('');
-              $("#add_civil_status").removeClass('border-danger');
-            }
-
-            if (data.add_contact != '') {
-              $('#add_contact_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_contact);
-              $("#add_contact").addClass("border-danger");
-            } else {
-              $('#add_contact_error').html('');
-              $("#add_contact").removeClass('border-danger');
-            }
-
-            if (data.add_guardian != '') {
-              $('#add_guardian_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_guardian);
-              $("#add_guardian").addClass("border-danger");
-            } else {
-              $('#add_guardian_error').html('');
-              $("#add_guardian").removeClass('border-danger');
-            }
-
-            if (data.add_email != '') {
-              $('#add_email_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_email);
-              $("#add_email").addClass("border-danger");
-            } else {
-              $('#add_email_error').html('');
-              $("#add_email").removeClass('border-danger');
-            }
-
-            if (data.add_guardian_contact != '') {
-              $('#add_guardian_contact_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_guardian_contact);
-              $("#add_guardian_contact").addClass("border-danger");
-            } else {
-              $('#add_guardian_contact_error').html('');
-              $("#add_guardian_contact").removeClass('border-danger');
-            }
-
-            if (data.add_video != '') {
-              $('#add_video_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_video);
-              $("#add_video").addClass("border-danger");
-            } else {
-              $('#add_video_error').html('');
-              $("#add_video").removeClass('border-danger');
-            }
-
-            if (data.add_pdf_file != '') {
-              $('#add_pdf_file_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_pdf_file);
-              $("#add_pdf_file").addClass("border-danger");
-            } else {
-              $('#add_pdf_file_error').html('');
-              $("#add_pdf_file").removeClass('border-danger');
-            }
-
-            if (data.add_form_138 != '') {
-              $('#add_form_138_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_form_138);
-              $("#add_form_138").addClass("border-danger");
-            } else {
-              $('#add_form_138_error').html('');
-              $("#add_form_138").removeClass('border-danger');
-            }
-
-            if (data.add_psa != '') {
-              $('#add_psa_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_psa);
-              $("#add_psa").addClass("border-danger");
-            } else {
-              $('#add_psa_error').html('');
-              $("#add_psa").removeClass('border-danger');
-            }
-
-            if (data.add_brgy_clearance != '') {
-              $('#add_brgy_clearance_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_brgy_clearance);
-              $("#add_brgy_clearance").addClass("border-danger");
-            } else {
-              $('#add_brgy_clearance_error').html('');
-              $("#add_brgy_clearance").removeClass('border-danger');
-            }
-
-            if (data.add_good_moral != '') {
-              $('#add_good_moral_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_good_moral);
-              $("#add_good_moral").addClass("border-danger");
-            } else {
-              $('#add_good_moral_error').html('');
-              $("#add_good_moral").removeClass('border-danger');
-            }
-
-            if (data.add_guardian_id != '') {
-              $('#add_guardian_id_error').html(
-                '<i class="fa-solid fa-triangle-exclamation pe-1"></i>' +
-                data.add_guardian_id);
-              $("#add_guardian_id").addClass("border-danger");
-            } else {
-              $('#add_guardian_id_error').html('');
-              $("#add_guardian_id").removeClass('border-danger');
-            }
-          } else if (data.status === 'success') {
-            localStorage.setItem('status', 'registration_submitted');
-            localStorage.setItem('message', data.message);
-            window.location.href = 'index';
-          } else if (data.status === 'failed') {
-            Swal.fire({
-              icon: 'error',
-              title: 'Failed!',
-              text: localStorage.getItem('message'),
-              iconColor: '#274c43',
-              confirmButtonColor: '#274c43',
-              showConfirmButton: false,
-              timer: 5000,
-              timerProgressBar: true,
-              color: '#000',
-              background: '#fff',
-            })
           }
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
         }
       })
     })
