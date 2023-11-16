@@ -19,4 +19,9 @@ class StudentSection extends Model
             return false; // Insert failed
         }
     }
+
+    public function getSectionId($student_id, $grade_level_id)
+    {
+        return $this->asObject()->where('student_id', $student_id)->where('grade_level_id', $grade_level_id)->first();
+    }
 }

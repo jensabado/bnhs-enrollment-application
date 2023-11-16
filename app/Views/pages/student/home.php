@@ -1,6 +1,73 @@
 <?= $this->extend('layout/student/page-layout') ?>
 
 <?= $this->section('content') ?>
+<style>
+.bg-light-gray {
+  background-color: #f7f7f7;
+}
+
+.table-bordered thead td,
+.table-bordered thead th {
+  border-bottom-width: 2px;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid #dee2e6;
+}
+
+.padding-15px-lr {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.padding-5px-tb {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.margin-10px-bottom {
+  margin-bottom: 10px;
+}
+
+.border-radius-5 {
+  border-radius: 5px;
+}
+
+.margin-10px-top {
+  margin-top: 10px;
+}
+
+.font-size14 {
+  font-size: 14px;
+}
+
+.text-light-gray {
+  color: #d6d5d5;
+}
+
+.font-size13 {
+  font-size: 13px;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid #dee2e6;
+}
+
+.table td,
+.table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+</style>
+
 <div class="pd-ltr-20 xs-pd-20-10">
   <div class="min-height-200px">
     <div class="page-header">
@@ -19,7 +86,56 @@
         </div>
       </div>
     </div>
-    HI
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+      <div class="container">
+        <div class="timetable-img text-center">
+          <img src="img/content/timetable.png" alt="">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr class="bg-light-gray">
+                <th class="text-uppercase">Time
+                </th>
+                <th class="text-uppercase">Monday</th>
+                <th class="text-uppercase">Tuesday</th>
+                <th class="text-uppercase">Wednesday</th>
+                <th class="text-uppercase">Thursday</th>
+                <th class="text-uppercase">Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if(count($schedules) > 0) { ?>
+              <?php foreach($schedules as $row) { ?>
+              <?php $schedule[date('h:i A', strtotime($row['start_time'])) . ' - ' . date('h:i A',
+              strtotime($row['end_time']))][$row['day_id']] = '<span
+              class="bg-primary padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13 mb-2">' . ucwords($row['subject']) . '</span> <div class="font-size13 text-dark mt-2">' . ucwords($row['f_name'] . ' ' .
+              $row['l_name']) . '</div>' ?>
+              <?php } ?>
+
+              <?php foreach($schedule as $time => $days) { ?>
+              <tr>
+                <td class="align-middle font-weight-bold"><?= $time ?></td>
+                <?php $daysOfWeek = array('1', '2', '3', '4', '5'); ?>
+                <?php foreach($daysOfWeek as $day) { ?>
+                <td>
+                  <?php if(isset($days[$day])) { ?>
+                  <?= $days[$day] ?>
+                  <?php } ?>
+                </td>
+                <?php } ?>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td colspan="6">NO RESULT</td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <?= $this->endSection(); ?>

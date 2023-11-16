@@ -157,7 +157,7 @@
       <?php } ?>
     </table>
     <div class="row mt-5" id="printed_info">
-      <p class="fw-bold">Printed By: <span style="font-weight: 500; padding-left: 10px"><?= getUser()->name; ?></span>
+      <p class="fw-bold">Printed By: <span style="font-weight: 500; padding-left: 10px"><?= getAdmin()->name; ?></span>
       </p>
     </div>
   </div>

@@ -3,15 +3,29 @@
 namespace App\Controllers;
 
 use App\Libraries\Hash;
+use App\Models\Section;
 use App\Models\Student;
 use App\Libraries\CIAuth;
+use App\Models\ClassroomSchedule;
 use App\Controllers\BaseController;
+use App\Models\StudentSection;
 
 class StudentController extends BaseController
 {
     public function index()
     {
-        return view('pages/student/home');
+        $sectionModel = new Section();
+        $classroomScheduleModel = new ClassroomSchedule();
+        $studentSectionModel = new StudentSection();
+
+        $section = $studentSectionModel->getSectionId(CIAuth::studentId(), getStudent()->grade_level_id);
+
+        $data = [
+            'schedules' => $classroomScheduleModel->schedule($section->section_id),
+            'pageTitle' => 'Home - Student Dashboard'
+        ];
+        
+        return view('pages/student/home', $data);
     }
 
     public function login()
