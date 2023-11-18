@@ -74,6 +74,9 @@ $routes->group('admin', function($routes) {
     $routes->post('enrollees/grade-7-data', 'EnrolleesController::grade7Datatable', ['as' => 'admin.enrollees/grade-7-data']);
     $routes->get('enrollees/grade-7/view/(:any)', 'EnrolleesController::grade7View/$1', ['as' => 'admin.enrollees/grade-7/view']);
     $routes->post('update-enrollees-status', 'EnrolleesController::updateStatus', ['as' => 'admin.update-enrollees-status']);
+    // GRADE 7 ENROLLED
+    $routes->get('enrolled/grade-7', 'EnrolledController::index', ['as' => 'admin.enrolled/grade-7']);
+    $routes->post('enrolled/grade-7-data', 'EnrolledController::grade7Datatable', ['as' => 'admin.enrolled/grade-7-data']);
   });
 
   $routes->group('', ['filter' => 'admin:guest'], function($routes) {

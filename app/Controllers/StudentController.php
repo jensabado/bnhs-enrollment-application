@@ -22,6 +22,7 @@ class StudentController extends BaseController
 
         $data = [
             'schedules' => $classroomScheduleModel->schedule($section->section_id),
+            'schedHeader' => $classroomScheduleModel->schedHeader($section->section_id),
             'pageTitle' => 'Home - Student Dashboard'
         ];
         

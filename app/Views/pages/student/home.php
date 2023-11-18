@@ -66,6 +66,12 @@
   vertical-align: top;
   border-top: 1px solid #dee2e6;
 }
+
+.custom_header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
 </style>
 
 <div class="pd-ltr-20 xs-pd-20-10">
@@ -87,7 +93,36 @@
       </div>
     </div>
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-      <div class="container">
+      <div class="container-fluid">
+        <div class="row mb-4 d-flex flex-column align-items-center justify-content-center" id="header_logo">
+          <img style="width: 80px;" class="mb-2" src="<?= base_url('home-assets/img/logo.png') ?>" alt="">
+          <p class="h3 text-center fw-bold">BACOOR NATIONAL HIGH SCHOOL - MAIN</p>
+        </div>
+        <?php foreach($schedHeader as $header) { ?>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="font-weight-bold">
+              GRADE & SECTION:
+              <span
+                style="font-weight: 500; padding-left: 10px;"><?= ucwords($header['grade'] . ' ' . $header['section']) ?></span>
+            </p>
+          </div>
+          <div class="col-md-6 text-md-right">
+            <p class="font-weight-bold">
+              ADVISER:
+              <span
+                style="font-weight: 500; padding-left: 10px;"><?= ucwords($header['f_name'] . ' ' . $header['l_name']) ?></span>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p class="font-weight-bold">
+              ROOM:
+              <span
+                style="font-weight: 500; padding-left: 10px;"><?= ucwords($header['building'] . ' - ' . $header['room']) ?></span>
+            </p>
+          </div>
+        </div>
+        <?php } ?>
         <div class="timetable-img text-center">
           <img src="img/content/timetable.png" alt="">
         </div>
